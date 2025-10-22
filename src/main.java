@@ -1,3 +1,5 @@
 public class main {
-    String hej = "hej";
+    public static void main (String[]arg){
+
+    }
 }
