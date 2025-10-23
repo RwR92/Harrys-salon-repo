@@ -6,6 +6,12 @@ public class Kunde {
         this.navn = navn;
         this.telefon = telefon;
     }
+    public String getNavn(){
+        return navn;
+    }
+    public String getTelefon(){
+        return telefon;
+    }
 
     public String toString(){
         return navn + " ("+telefon+")";
