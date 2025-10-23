@@ -16,9 +16,6 @@ class testing1{
         Scanner scan = new Scanner(System.in);
         Kalender kalender = new Kalender();
 
-
-        // kommentar
-
         System.out.println("Kundens navn");
         String navn = scan.nextLine();
         System.out.println("Kundens nummer");
@@ -32,5 +29,6 @@ class testing1{
 
         kalender.tilføjBooking(new Booking(kunde, dato, tid));
         System.out.println(kalender.bookinger);
+        scan.close();
     }
 }
