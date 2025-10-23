@@ -59,16 +59,13 @@ public void menuStart (){
                     break;
                 default:
                     System.out.println("ugyldigt valg");
+                    start=false;
 
             }
         }
     }
-
+    scn.close();
 }
-public void test(){
-
-
-        }
 
     }
 }
