@@ -16,6 +16,9 @@ class testing1{
         Scanner scan = new Scanner(System.in);
         Kalender kalender = new Kalender();
 
+
+        // kommentar
+
         System.out.println("Kundens navn");
         String navn = scan.nextLine();
         System.out.println("Kundens nummer");
