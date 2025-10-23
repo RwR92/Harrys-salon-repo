@@ -73,7 +73,7 @@ class Menuer{
                         System.out.println("Tid (hh:mm)");
                         LocalTime tid = LocalTime.parse(scn.nextLine());
 
-                        kalender.tilføjBooking(new Booking(kunde, dato, tid));
+                        kalender.tilfoejBooking(new Booking(kunde, dato, tid));
                         break;
                     case 2:
                         System.out.println("2");
