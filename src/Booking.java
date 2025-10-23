@@ -12,12 +12,15 @@ public class Booking {
         this.tid = tid;
     }
 
-    private LocalTime getTid(){
+    public LocalTime getTid(){
         return tid;
     }
 
-    private LocalDate getDato(){
+    public LocalDate getDato(){
         return dato;
+    }
+    public String getNavn(){
+        return kunde.getNavn();
     }
 
     public String toString(){
