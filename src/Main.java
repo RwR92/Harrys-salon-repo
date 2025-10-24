@@ -52,9 +52,7 @@ class Menu{
     }
 
     public void bogfoering(){
-        while(true){
-
-        }
+        
     }
 
     public void administration(){
