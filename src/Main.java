@@ -113,8 +113,6 @@ class Menuer {  //UI Klasse
                     String navn=scn.nextLine();
                     System.out.println("kundens dato");
                     LocalDate dato2=LocalDate.parse(scn.nextLine());
-                    System.out.println("kundesn tidspunkt");
-                    LocalTime tid2=LocalTime.parse(scn.nextLine());
                     kalender.fjernBooking(navn,dato2);
                     break;}
                 case 3:
