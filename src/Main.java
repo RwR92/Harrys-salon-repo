@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -100,8 +101,25 @@ class Menuer{
 
                     System.out.println("Dato? (yyyy-mm-dd)");
                     LocalDate dato = LocalDate.parse(scn.nextLine());
-                    System.out.println("Tid (hh:mm)");
-                    LocalTime tid = LocalTime.parse(scn.nextLine());
+
+                    ArrayList<LocalTime> ledigeTider = kalender.findLedigeTider(dato);
+                    if(ledigeTider.isEmpty()){
+                        System.out.println("Der er ingen ledige tider den dag.");
+                        return;
+                    }
+
+                    System.out.println("Ledige tider: ");
+                    for(int i = 0; i < ledigeTider.size(); i ++){
+                        System.out.println((i+1) + ") " + ledigeTider.get(i));
+                    }
+
+                    System.out.print("Vælg et nummer for ønsket tid: ");
+                    int valgteTid = scn.nextInt();
+                    scn.nextLine();
+                    LocalTime tid = ledigeTider.get(valgteTid - 1);
+
+                    //System.out.println("Tid (hh:mm)");
+                    //LocalTime tid = LocalTime.parse(scn.nextLine());
 
                     kalender.tilfoejBooking(new Booking(kunde, dato, tid));
                     menuStart();
