@@ -68,8 +68,7 @@ class Menuer {  //UI Klasse
                     break;
                 case 3:
                     System.out.println("gå tilbage til startmenu");
-                    menuStart();
-                    //menuStart();  //metodekald til startmenu
+                    menuStart();  //metodekald til startmenu
                 case 4:
                     bookValg();
                     break;
