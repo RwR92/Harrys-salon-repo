@@ -49,7 +49,7 @@ public class Kalender {
         System.out.println();
     }
 
-    public void sortList(){ 
+    public void sortList(){
         bookinger.sort((b1, b2) -> {
             int comparator = b1.getDato().compareTo(b2.getDato());
             if (comparator != 0) return comparator;
