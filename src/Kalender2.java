@@ -54,6 +54,28 @@ public class Kalender2 {
         return bookinger;
     }
 
+    public ArrayList<LocalTime> genererMuligeTider(){
+        ArrayList<LocalTime> tider = new ArrayList<>();
+
+        for (int time = 10; time < 18; time ++){
+            tider.add(LocalTime.of(time,0));
+            tider.add(LocalTime.of(time, 30));
+        }
+        return tider;
+    }
+
+    public ArrayList<LocalTime> findLedigeTider(LocalDate dato){
+        ArrayList<LocalTime> muligeTider = genererMuligeTider();
+
+        for (Booking b : bookinger){
+            if(b.getDato().equals(dato)){
+                muligeTider.remove(b.getTid());
+            }
+        }
+
+        return muligeTider;
+    }
+
     public boolean tjekTidsrum(Booking booking){
         if (booking.getTid().isBefore(LocalTime.of(10, 0)) || booking.getTid().isAfter(LocalTime.of(18, 0))){
             return false;
