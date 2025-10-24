@@ -94,6 +94,7 @@ class Menuer {  //UI Klasse
 
             switch (valg) {
                 case 1:{
+                    //Tilføj booking
                     System.out.println("Kundens navn");
                     String navn = scn.nextLine();
                     System.out.println("Kundens nummer");
@@ -109,6 +110,7 @@ class Menuer {  //UI Klasse
                     menuStart();
                     break;}
                 case 2:{
+                    //Fjern booking
                     System.out.println("Kundens navn");
                     String navn=scn.nextLine();
                     System.out.println("kundens dato");
@@ -116,9 +118,11 @@ class Menuer {  //UI Klasse
                     kalender.fjernBooking(navn,dato2);
                     break;}
                 case 3:
+                    //Til hovedmenu
                     menuStart();
                     break;
                 case 4:
+                    //Til bogføring menu
                     valgBogfoering();
                     break;
                 default:
