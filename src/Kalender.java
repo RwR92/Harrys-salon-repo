@@ -56,4 +56,4 @@ public class Kalender {
             return b1.getTid().compareTo(b2.getTid());
         });
     }
-}
+} // kalender
