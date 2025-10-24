@@ -6,7 +6,7 @@ public class Kalender2 {
     private ArrayList<Booking> bookinger = new ArrayList<>();
 
 
-    public void tilføjBooking(Booking b){
+    public void tilfoejBooking(Booking b){
         for(Booking eksisterende : bookinger){
             if(eksisterende.getDato().equals(b.getDato()) && eksisterende.getTid().equals(b.getTid())){
                 System.out.println("Tidspunktet er optaget.");
