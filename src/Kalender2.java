@@ -15,7 +15,8 @@ public class Kalender2 {
         }
         bookinger.add(b);
         System.out.println("Booking tilføjet for " + b.toString());
-    }
+    }//tilføjBooking
+
     public void fjernBooking(String navn, LocalDate dato, LocalTime tidspunkt){
         for(int i = 0; i < bookinger.size(); i++){
             Booking b = bookinger.get(i);
@@ -25,7 +26,8 @@ public class Kalender2 {
                 return;
             }
         }
-    }
+    }// fjernBooking
+
     public void visBookingerForDag(LocalDate dato){
         System.out.println("Bookinger for "+ dato + ":");
         for(Booking b : bookinger){
@@ -33,7 +35,8 @@ public class Kalender2 {
                 System.out.println("- "+b.getNavn() +" kl. "+b.getTid()+" ("+b.getDato());
             }
         }
-    }
+    }// visBookingerForDag metode
+    
     public boolean erTidOptaget(LocalDate dato, LocalTime tidspunkt){
         for(Booking b : bookinger){
             if(b.getDato().equals(dato) && b.getTid().equals(tidspunkt)){
@@ -41,7 +44,8 @@ public class Kalender2 {
             }
         }
         return false;
-    }
+    }//erTidOptaget metode
+
     public ArrayList<Booking>hentAlleBookinger(){
         return bookinger;
     }
