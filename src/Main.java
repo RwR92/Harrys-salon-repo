@@ -5,86 +5,129 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Kalender k=new Kalender();
-        Menuer m=new Menuer(k);
+        Menu m = new Menu(k);
+//        Menuer m=new Menuer(k);
+//
+//        m.menuStart();
+        System.out.println("***Harry's frisør salon***");
+        while (true){
+            m.startMenu();
+        }
 
-        m.menuStart();
     }
 }
 
-class Menuer{
+class Menu{
     Kalender kalender;
 
-    Menuer(Kalender kalender){
+    Menu(Kalender kalender){
         this.kalender = kalender;
     }
 
-    public void menuStart (){
-        System.out.println("***Harry's frisør salon***");
-        System.out.println("Tast 1: for bogføring");
-        System.out.println("Tast 2: for booking");
-        Scanner scn= new Scanner(System.in);
-        int bogforingvalg = 0;
-        int bookingvalg = 0;
+    public void startMenu(){
+        String startMenu;
 
-        boolean start= true;
-        while (start){
-
-            int valg = scn.nextInt();
-
-            switch (valg){
-                case 1:
-                    System.out.println("Tast 1: for at se specifik dato");
-                    System.out.println("Tast 2: for at se alle datoer");
-                    bogforingvalg = scn.nextInt();
-                    break;
-                case 2:
-                    System.out.println("Tast 1: opret booking");
-                    System.out.println("Tast 2: for at slette booking");
-                    bookingvalg = scn.nextInt();
-                    break;
-                default:
-                    System.out.println("ugyldigt valg");
-
-            }
-
-            if (bogforingvalg!= 0){
-                switch (bogforingvalg){
-                    case 1:
-                        System.out.println("udskriver specifik dato");
-                        break;
-                    case 2:
-                        System.out.println("udskriver alle kvitteringer");
-                        break;
-                    default:
-                        System.out.println("ugyldigt valg");
-                }
-            }
-            if (bookingvalg!=0){
-                switch (bookingvalg){
-                    case 1:
-                        System.out.println("Kundens navn");
-                        String navn = scn.nextLine();
-                        System.out.println("Kundens nummer");
-                        String nummer = scn.nextLine();
-                        Kunde kunde = new Kunde(navn, nummer);
-
-                        System.out.println("Dato? (yyyy-mm-dd)");
-                        LocalDate dato = LocalDate.parse(scn.nextLine());
-                        System.out.println("Tid (hh:mm)");
-                        LocalTime tid = LocalTime.parse(scn.nextLine());
-
-                        kalender.tilfoejBooking(new Booking(kunde, dato, tid));
-                        break;
-                    case 2:
-                        System.out.println("2");
-                        break;
-                    default:
-                        System.out.println("ugyldigt valg");
-                        start=false;
-
-                }
+        System.out.println("[1] Bogføring");
+        System.out.println("[2] Administration");
+        System.out.println("[3] Luk system");
+        while(true){
+            startMenu = Tools.scan.nextLine();
+            if (startMenu.equals("1") || startMenu.equals("2") || startMenu.equals("3")){
+                break;
+            } else {
+                System.out.println("Vælg [1], [2] eller [3].");
             }
         }
-        scn.close();
+
+        switch (startMenu){
+            case "1":
+                bogfoering();
+                break;
+            case "2":
+                administration();
+                break;
+            case "3":
+                System.exit(0);
+        }
     }
+
+    public void bogfoering(){
+        while(true){
+
+        }
+    }
+
+    public void administration(){
+        boolean loop = true;
+        while(loop) {
+            System.out.println("[1] Opret ny booking");
+            System.out.println("[2] Aflys en booking");
+            System.out.println("[3] Vis bookings");
+            System.out.println("[4] Gå tilbage");
+
+            String valg;
+            while (true) {
+                valg = Tools.scan.nextLine();
+                if (valg.equals("1") || valg.equals("2") || valg.equals("3") || valg.equals("4")) {
+                    break;
+                } else {
+                    System.out.println("Vælg [1], [2], [3] eller [4].");
+                }
+            }
+
+            switch (valg) {
+                case "1":
+                    System.out.println("Hvad er kundens navn");
+                    String navn = Tools.scan.nextLine();
+                    System.out.println("Hvad er kundens telefonnummer");
+                    String nummer = Tools.scan.nextLine();
+                    Kunde kunde = new Kunde(navn, nummer);
+
+                    System.out.println("Hvilken dato? (yyyy-mm-dd)");
+                    LocalDate dato = LocalDate.parse(Tools.scan.nextLine());
+                    System.out.println("Hvilken tid? (hh:mm)");
+                    LocalTime tid = LocalTime.parse(Tools.scan.nextLine());
+
+                    kalender.tilfoejBooking(new Booking(kunde, dato, tid));
+                    break;
+                case "2":
+                    System.out.println("Hvad er kundens telefonnummer?");
+                    String telefon = Tools.scan.nextLine();
+                    kalender.fjernBooking(telefon);
+                    break;
+                case "3":
+                    System.out.println("[1] Vis alle aktuelle bookings");
+                    System.out.println("[2] Vis en specifik dag");
+
+                    String entenEller;
+                    while (true) {
+                        entenEller = Tools.scan.nextLine();
+                        if (entenEller.equals("1") || entenEller.equals("2")) {
+                            break;
+                        } else {
+                            System.out.println("Vælg [1] eller [2]");
+                        }
+                    }
+                    switch (entenEller) {
+                        case "1":
+                            kalender.hentAlleBookinger();
+                            break;
+                        case "2":
+                            System.out.println("Hvilken dato vil du hente bookings for? (yyyy-mm-dd)");
+                            LocalDate datoUdtraek = LocalDate.parse(Tools.scan.nextLine());
+                            System.out.println();
+                            kalender.visBookingerForDag(datoUdtraek);
+                            break;
+                    }
+                    break;
+                case "4":
+                    loop = false;
+                    break;
+            }
+        }
+    }
+}
+
+class Tools{
+    static Scanner scan = new Scanner(System.in);
 }
