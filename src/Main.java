@@ -13,7 +13,6 @@ public class Main {
         while (true){
             m.startMenu();
         }
-
     }
 }
 
@@ -52,7 +51,7 @@ class Menu{
     }
 
     public void bogfoering(){
-        
+
     }
 
     public void administration(){
