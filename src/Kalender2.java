@@ -16,7 +16,7 @@ public class Kalender2 {
         bookinger.add(b);
         System.out.println("Booking tilføjet for " + b.toString());
     }
-    public void fjernBooking(String navn, LocalDate dato, LocalTime tidspunkt){
+    public  void fjernBooking(String navn, LocalDate dato, LocalTime tidspunkt){
         for(int i = 0; i < bookinger.size(); i++){
             Booking b = bookinger.get(i);
             if(b.getNavn().equals(navn) && b.getDato().equals(dato) && b.getTid().equals(tidspunkt)){
