@@ -85,8 +85,9 @@ class Menuer {  //UI Klasse
         while (start) {
             System.out.println("Tast 1: opret booking");
             System.out.println("Tast 2: for at slette booking");
-            System.out.println("Tast 3: for at gå til Startmenu");
-            System.out.println("Tast 4: for at gå til Bogføring");
+            System.out.println("Tast 3: for at vise Bookinger for en bestemt dag");
+            System.out.println("Tast 4: for at gå til Startmenu");
+            System.out.println("Tast 5: for at gå til Bogføring");
 
             int valg = scn.nextInt();
             scn.nextLine();
@@ -116,9 +117,14 @@ class Menuer {  //UI Klasse
                     kalender.fjernBooking(navn,dato2);
                     break;}
                 case 3:
+                    System.out.println("vælg dato du vil se for");
+                    LocalDate dato3=LocalDate.parse(scn.nextLine());
+                    kalender.visBookingerForDag(dato3);
+                    System.out.println("");
+                case 4:
                     menuStart();
                     break;
-                case 4:
+                case 5:
                     valgBogfoering();
                     break;
                 default:
