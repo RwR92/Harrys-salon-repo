@@ -7,25 +7,31 @@ public class Kalender2 {
 
 
     public void tilfoejBooking(Booking b){
-        for(Booking eksisterende : bookinger){
-            if(eksisterende.getDato().equals(b.getDato()) && eksisterende.getTid().equals(b.getTid())){
-                System.out.println("Tidspunktet er optaget.");
-                return;
-            }
+        if(!tjekTidsrum(b)){
+            System.out.println("Booking skal være inde for tidsrummet 10:00 til 18:00.\n");
+            return;
         }
+            for(Booking eksisterende : bookinger){
+                if(eksisterende.getDato().equals(b.getDato()) && eksisterende.getTid().equals(b.getTid())){
+                    System.out.println("Tidspunktet er optaget.");
+                    return;
+                }
+            }
         bookinger.add(b);
-        System.out.println("Booking tilføjet for " + b.toString());
-    }
-    public  void fjernBooking(String navn, LocalDate dato, LocalTime tidspunkt){
+        System.out.println("Booking tilføjet for " + b);
+    }//tilføjBooking
+
+    public void fjernBooking(String navn, LocalDate dato){
         for(int i = 0; i < bookinger.size(); i++){
             Booking b = bookinger.get(i);
-            if(b.getNavn().equals(navn) && b.getDato().equals(dato) && b.getTid().equals(tidspunkt)){
+            if(b.getNavn().equals(navn) && b.getDato().equals(dato)){
                 bookinger.remove(i);
                 System.out.println("Booking er fjernet for "+ navn);
                 return;
             }
         }
-    }
+    }// fjernBooking
+
     public void visBookingerForDag(LocalDate dato){
         System.out.println("Bookinger for "+ dato + ":");
         for(Booking b : bookinger){
@@ -33,7 +39,8 @@ public class Kalender2 {
                 System.out.println("- "+b.getNavn() +" kl. "+b.getTid()+" ("+b.getDato());
             }
         }
-    }
+    }// visBookingerForDag metode
+    
     public boolean erTidOptaget(LocalDate dato, LocalTime tidspunkt){
         for(Booking b : bookinger){
             if(b.getDato().equals(dato) && b.getTid().equals(tidspunkt)){
@@ -41,8 +48,16 @@ public class Kalender2 {
             }
         }
         return false;
-    }
+    }//erTidOptaget metode
+
     public ArrayList<Booking>hentAlleBookinger(){
         return bookinger;
+    }
+
+    public boolean tjekTidsrum(Booking booking){
+        if (booking.getTid().isBefore(LocalTime.of(10, 0)) || booking.getTid().isAfter(LocalTime.of(18, 0))){
+            return false;
+        }
+        return true;
     }
 }//Kalender class
