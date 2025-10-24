@@ -21,10 +21,10 @@ public class Kalender2 {
         System.out.println("Booking tilføjet for " + b);
     }//tilføjBooking
 
-    public void fjernBooking(String navn, LocalDate dato, LocalTime tidspunkt){
+    public void fjernBooking(String navn, LocalDate dato){
         for(int i = 0; i < bookinger.size(); i++){
             Booking b = bookinger.get(i);
-            if(b.getNavn().equals(navn) && b.getDato().equals(dato) && b.getTid().equals(tidspunkt)){
+            if(b.getNavn().equals(navn) && b.getDato().equals(dato)){
                 bookinger.remove(i);
                 System.out.println("Booking er fjernet for "+ navn);
                 return;
