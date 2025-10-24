@@ -7,14 +7,18 @@ public class Kalender2 {
 
 
     public void tilfoejBooking(Booking b){
-        for(Booking eksisterende : bookinger){
-            if(eksisterende.getDato().equals(b.getDato()) && eksisterende.getTid().equals(b.getTid())){
-                System.out.println("Tidspunktet er optaget.");
-                return;
-            }
+        if(!tjekTidsrum(b)){
+            System.out.println("Booking skal være inde for tidsrummet 10:00 til 18:00.\n");
+            return;
         }
+            for(Booking eksisterende : bookinger){
+                if(eksisterende.getDato().equals(b.getDato()) && eksisterende.getTid().equals(b.getTid())){
+                    System.out.println("Tidspunktet er optaget.");
+                    return;
+                }
+            }
         bookinger.add(b);
-        System.out.println("Booking tilføjet for " + b.toString());
+        System.out.println("Booking tilføjet for " + b);
     }//tilføjBooking
 
     public void fjernBooking(String navn, LocalDate dato, LocalTime tidspunkt){
@@ -48,5 +52,12 @@ public class Kalender2 {
 
     public ArrayList<Booking>hentAlleBookinger(){
         return bookinger;
+    }
+
+    public boolean tjekTidsrum(Booking booking){
+        if (booking.getTid().isBefore(LocalTime.of(10, 0)) || booking.getTid().isAfter(LocalTime.of(18, 0))){
+            return false;
+        }
+        return true;
     }
 }//Kalender class
