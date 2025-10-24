@@ -42,7 +42,7 @@ class Menuer{
                     start=false;
                     break;
                 default:
-                    System.out.println("");
+                    System.out.println("Ugyldigt input");
             }
 
         }
@@ -67,13 +67,14 @@ class Menuer{
                 break;
             case 3:
                 System.out.println("gå tilbage til startmenu");
-                return;
+                menuStart();
             case 4:
                 bookValg();
+                break;
             case 5:
 
             default:
-                System.out.println("");
+                System.out.println("ugyldigt input");
         }
         }
         }
@@ -91,7 +92,6 @@ class Menuer{
 
             switch (valg) {
                 case 1:
-                    scn.nextLine();
                     System.out.println("Kundens navn");
                     String navn = scn.nextLine();
                     System.out.println("Kundens nummer");
@@ -116,7 +116,7 @@ class Menuer{
                     valgBogfoering();
                     break;
                 default:
-                    System.out.println("");
+                    System.out.println("ugyldigt input");
             }
         }
         }
