@@ -119,7 +119,7 @@ class Menuer {  //UI Klasse
                     System.out.println("vælg dato du vil se for");
                     LocalDate dato3=LocalDate.parse(scn.nextLine());
                     kalender.visBookingerForDag(dato3);
-                    System.out.println("");
+                    System.out.println();
                 case 4:
                     menuStart();
                     break;
