@@ -4,87 +4,121 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Kalender k=new Kalender();
+        Kalender2 k=new Kalender2();
         Menuer m=new Menuer(k);
-
         m.menuStart();
     }
 }
 
 class Menuer{
-    Kalender kalender;
+    boolean start=true;
+    Scanner scn= new Scanner(System.in);
+    Kalender2 kalender;
 
-    Menuer(Kalender kalender){
+
+    Menuer(Kalender2 kalender){
         this.kalender = kalender;
     }
 
     public void menuStart (){
-        System.out.println("***Harry's frisør salon***");
-        System.out.println("Tast 1: for bogføring");
-        System.out.println("Tast 2: for booking");
-        Scanner scn= new Scanner(System.in);
-        int bogforingvalg = 0;
-        int bookingvalg = 0;
-
-        boolean start= true;
         while (start){
+            System.out.println("***Harry's frisør salon***");
+            System.out.println("Tast 1: for bogføring");
+            System.out.println("Tast 2: for booking");
+            System.out.println("Tast 3: for at afslutte");
 
             int valg = scn.nextInt();
+            scn.nextLine();
 
-            switch (valg){
+            switch (valg) {
                 case 1:
-                    System.out.println("Tast 1: for at se specifik dato");
-                    System.out.println("Tast 2: for at se alle datoer");
-                    bogforingvalg = scn.nextInt();
+                    valgBogfoering();
                     break;
                 case 2:
-                    System.out.println("Tast 1: opret booking");
-                    System.out.println("Tast 2: for at slette booking");
-                    bookingvalg = scn.nextInt();
+                    bookValg();
+                    break;
+                case 3:
+                    System.out.println("\nprogram lukker");
+                    start=false;
                     break;
                 default:
-                    System.out.println("ugyldigt valg");
-
+                    System.out.println("");
             }
 
-            if (bogforingvalg!= 0){
-                switch (bogforingvalg){
-                    case 1:
-                        System.out.println("udskriver specifik dato");
-                        break;
-                    case 2:
-                        System.out.println("udskriver alle kvitteringer");
-                        break;
-                    default:
-                        System.out.println("ugyldigt valg");
-                }
-            }
-            if (bookingvalg!=0){
-                switch (bookingvalg){
-                    case 1:
-                        System.out.println("Kundens navn");
-                        String navn = scn.nextLine();
-                        System.out.println("Kundens nummer");
-                        String nummer = scn.nextLine();
-                        Kunde kunde = new Kunde(navn, nummer);
+        }
+    }
+    public void valgBogfoering(){
+        while(start){
+        System.out.println("Tast 1: udskriver specifik dato");
+        System.out.println("Tast 2: udskriver alle kvitteringer");
+        System.out.println("Tast 3: gå tilbage til startmenu");
+        System.out.println("Tast 4: gå til Booking");
 
-                        System.out.println("Dato? (yyyy-mm-dd)");
-                        LocalDate dato = LocalDate.parse(scn.nextLine());
-                        System.out.println("Tid (hh:mm)");
-                        LocalTime tid = LocalTime.parse(scn.nextLine());
+        int valg= scn.nextInt();
+        scn.nextLine();
 
-                        kalender.tilfoejBooking(new Booking(kunde, dato, tid));
-                        break;
-                    case 2:
-                        System.out.println("2");
-                        break;
-                    default:
-                        System.out.println("ugyldigt valg");
-                        start=false;
 
-                }
+        switch (valg) {
+            case 1:
+                System.out.println("udskriver specifik dato");
+                break;
+            case 2:
+                System.out.println("udskriver alle kvitteringer");
+                break;
+            case 3:
+                System.out.println("gå tilbage til startmenu");
+                return;
+            case 4:
+                bookValg();
+            case 5:
+
+            default:
+                System.out.println("");
+        }
+        }
+        }
+
+    public void bookValg(){
+        while (start) {
+            System.out.println("Tast 1: opret booking");
+            System.out.println("Tast 2: for at slette booking");
+            System.out.println("Tast 3: for at gå til Startmenu");
+            System.out.println("Tast 4: for at gå til Bogføring");
+
+            int valg = scn.nextInt();
+            scn.nextLine();
+
+
+            switch (valg) {
+                case 1:
+                    scn.nextLine();
+                    System.out.println("Kundens navn");
+                    String navn = scn.nextLine();
+                    System.out.println("Kundens nummer");
+                    String nummer = scn.nextLine();
+                    Kunde kunde = new Kunde(navn, nummer);
+
+                    System.out.println("Dato? (yyyy-mm-dd)");
+                    LocalDate dato = LocalDate.parse(scn.nextLine());
+                    System.out.println("Tid (hh:mm)");
+                    LocalTime tid = LocalTime.parse(scn.nextLine());
+
+                    kalender.tilfoejBooking(new Booking(kunde, dato, tid));
+                    menuStart();
+                    break;
+                case 2:
+                    System.out.println("Not here");
+                    break;
+                case 3:
+                    menuStart();
+                    break;
+                case 4:
+                    valgBogfoering();
+                    break;
+                default:
+                    System.out.println("");
             }
         }
-        scn.close();
+        }
     }
-}
+
