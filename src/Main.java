@@ -109,14 +109,14 @@ class Menuer {  //UI Klasse
                     scn.nextLine();
                     Kunde kunde = new Kunde(navn, nummer);
 
-
                     System.out.println("Dato? (yyyy-mm-dd)");
                     LocalDate dato = LocalDate.parse(scn.nextLine());
 
                     //bruger checkDayOfWeek til at bestemme om det er lukkedag
-                    boolean itIsWeekend = kalender.checkDayOfWeek(dato);
+                    boolean itIsWeekend = ClosingDays.checkDayOfWeek(dato);
                     if (itIsWeekend)
                      break;
+
 
                     ArrayList<LocalTime> ledigeTider = kalender.findLedigeTider(dato);
                     if(ledigeTider.isEmpty()){

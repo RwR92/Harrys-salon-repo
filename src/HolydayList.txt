@@ -1,0 +1,14 @@
+Nytaarsdag;01-01-2026
+Skaertorsdag;02-04-2026
+Langfredag;03-04-2026
+Paaskedag; 05-04-2026
+Anden paaskedag; 06-04-2026
+Forste maj; 01-05-2026
+Kristi himmelfartsdag; 14-05-2026
+Pinsedag; 24-05-2026
+Anden pinsedag; 25-05-2026
+Grundlovsdag; 05-06-2026
+Juleaften; 24-12-2026
+Juledag; 25-12-2026
+Anden juledag; 26-12-2026
+Nytaarsaften; 31-12-2026
