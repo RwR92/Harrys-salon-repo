@@ -28,6 +28,10 @@ public class Booking {
         return kunde.getNavn();
     }
 
+    public Kunde getKunde(){
+        return kunde;
+    }
+
     public String toString(){
         return kunde+" "+getDato()+" "+ getTid();
     }

@@ -9,6 +9,7 @@ public class Kunde {
     public String getNavn(){
         return navn;
     }
+
     public String getTelefon(){
         return telefon;
     }
