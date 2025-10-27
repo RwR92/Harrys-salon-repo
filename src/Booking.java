@@ -7,11 +7,11 @@ public class Booking {
     private Kunde kunde;
     private double totalPrice;
 
-    Booking(Kunde kunde, LocalDate dato, LocalTime tid){
+    Booking(Kunde kunde, LocalDate dato, LocalTime tid, double totalPrice){
         this.kunde = kunde;
         this.dato = dato;
         this.tid = tid;
-        this.totalPrice=0.0;
+        this.totalPrice=totalPrice;
     }
 
     public LocalTime getTid(){
@@ -35,7 +35,7 @@ public class Booking {
 
 
     public String toString(){
-        return kunde+" "+getDato()+" "+ getTid();
+        return kunde+" "+getDato()+" "+ getTid() + " TOTAL: " + getTotalPrice() + "Kr.";
     }
 }
 

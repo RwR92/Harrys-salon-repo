@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -6,7 +7,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Kalender2 k=new Kalender2();
-        Menuer m=new Menuer(k);
+        VirkØkonomi økonomi = new VirkØkonomi(k);
+        Menuer m=new Menuer(k, økonomi);
         m.menuStart();
     }
 }
@@ -15,10 +17,12 @@ class Menuer {  //UI Klasse
     boolean start = true;
     Scanner scn = new Scanner(System.in);
     Kalender2 kalender;
+    VirkØkonomi økonomi;
 
 
-    Menuer(Kalender2 kalender) {
+    Menuer(Kalender2 kalender, VirkØkonomi økonomi) {
         this.kalender = kalender;
+        this.økonomi=økonomi;
     }
 
     public void menuStart() {
@@ -99,6 +103,8 @@ class Menuer {  //UI Klasse
                     String navn = scn.nextLine();
                     System.out.println("Kundens nummer");
                     String nummer = scn.nextLine();
+                    System.out.println("Total pris: ");
+                    double totalPrice = scn.nextDouble();
                     Kunde kunde = new Kunde(navn, nummer);
 
                     System.out.println("Dato? (yyyy-mm-dd)");
@@ -123,7 +129,7 @@ class Menuer {  //UI Klasse
                     //System.out.println("Tid (hh:mm)");
                     //LocalTime tid = LocalTime.parse(scn.nextLine());
 
-                    kalender.tilfoejBooking(new Booking(kunde, dato, tid));
+                    kalender.tilfoejBooking(new Booking(kunde, dato, tid, totalPrice));
                     menuStart();
                     break;}
                 case 2:{
