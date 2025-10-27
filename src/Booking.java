@@ -25,6 +25,10 @@ public class Booking {
         return kunde.getNavn();
     }
 
+    public String getTelefon(){
+        return kunde.getTelefon();
+    }
+
     public void setTotalPrice (double totalPrice) {
         this.totalPrice=totalPrice;
     }
