@@ -131,6 +131,7 @@ class Menuer {  //UI Klasse
                     //LocalTime tid = LocalTime.parse(scn.nextLine());
 
                     kalender.tilfoejBooking(new Booking(kunde, dato, tid, totalPrice));
+                    økonomi.gemBooking();
                     menuStart();
                     break;}
                 case 2:{
@@ -144,8 +145,7 @@ class Menuer {  //UI Klasse
                 case 3:
                     System.out.println("vælg dato du vil se for");
                     LocalDate dato3=LocalDate.parse(scn.nextLine());
-                    kalender.visBookingerForDag(dato3);
-                    System.out.println();
+                    økonomi.findBooking(dato3);
                 case 4:
                     menuStart();
                     break;
