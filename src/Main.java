@@ -1,11 +1,13 @@
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Kalender2 k=new Kalender2();
-        Menuer m=new Menuer(k);
+        Kalender k=new Kalender();
+        VirkØkonomi økonomi = new VirkØkonomi(k);
+        Menuer m=new Menuer(k, økonomi);
         m.menuStart();
     }
 }
@@ -13,11 +15,13 @@ public class Main {
 class Menuer {  //UI Klasse
     boolean start = true;
     Scanner scn = new Scanner(System.in);
-    Kalender2 kalender;
+    Kalender kalender;
+    VirkØkonomi økonomi;
 
 
-    Menuer(Kalender2 kalender) {
+    Menuer(Kalender kalender, VirkØkonomi økonomi) {
         this.kalender = kalender;
+        this.økonomi=økonomi;
     }
 
     public void menuStart() {
@@ -68,8 +72,7 @@ class Menuer {  //UI Klasse
                     break;
                 case 3:
                     System.out.println("gå tilbage til startmenu");
-                    menuStart();
-                    //menuStart();  //metodekald til startmenu
+                    menuStart();  //metodekald til startmenu
                 case 4:
                     bookValg();
                     break;
@@ -85,8 +88,9 @@ class Menuer {  //UI Klasse
         while (start) {
             System.out.println("Tast 1: opret booking");
             System.out.println("Tast 2: for at slette booking");
-            System.out.println("Tast 3: for at gå til Startmenu");
-            System.out.println("Tast 4: for at gå til Bogføring");
+            System.out.println("Tast 3: for at vise Bookinger for en bestemt dag");
+            System.out.println("Tast 4: for at gå til Startmenu");
+            System.out.println("Tast 5: for at gå til Bogføring");
 
             int valg = scn.nextInt();
             scn.nextLine();
@@ -94,35 +98,58 @@ class Menuer {  //UI Klasse
 
             switch (valg) {
                 case 1:{
-                    //Tilføj booking
                     System.out.println("Kundens navn");
                     String navn = scn.nextLine();
                     System.out.println("Kundens nummer");
                     String nummer = scn.nextLine();
+                    System.out.println("Total pris: ");
+                    double totalPrice = scn.nextDouble();
+                    scn.nextLine();
                     Kunde kunde = new Kunde(navn, nummer);
+
 
                     System.out.println("Dato? (yyyy-mm-dd)");
                     LocalDate dato = LocalDate.parse(scn.nextLine());
-                    System.out.println("Tid (hh:mm)");
-                    LocalTime tid = LocalTime.parse(scn.nextLine());
 
-                    kalender.tilfoejBooking(new Booking(kunde, dato, tid));
+                    ArrayList<LocalTime> ledigeTider = kalender.findLedigeTider(dato);
+                    if(ledigeTider.isEmpty()){
+                        System.out.println("Der er ingen ledige tider den dag.");
+                        return;
+                    }
+
+                    System.out.println("Ledige tider: ");
+                    for(int i = 0; i < ledigeTider.size(); i ++){
+                        System.out.println((i+1) + ") " + ledigeTider.get(i));
+                    }
+
+                    System.out.print("Vælg et nummer for ønsket tid: ");
+                    int valgteTid = scn.nextInt();
+                    scn.nextLine();
+                    LocalTime tid = ledigeTider.get(valgteTid - 1);
+
+                    //System.out.println("Tid (hh:mm)");
+                    //LocalTime tid = LocalTime.parse(scn.nextLine());
+
+                    kalender.tilfoejBooking(new Booking(kunde, dato, tid, totalPrice));
                     menuStart();
                     break;}
                 case 2:{
-                    //Fjern booking
                     System.out.println("Kundens navn");
                     String navn=scn.nextLine();
                     System.out.println("kundens dato");
+                    System.out.println("Dato? (yyyy-mm-dd)");
                     LocalDate dato2=LocalDate.parse(scn.nextLine());
                     kalender.fjernBooking(navn,dato2);
                     break;}
                 case 3:
-                    //Til hovedmenu
+                    System.out.println("vælg dato du vil se for");
+                    LocalDate dato3=LocalDate.parse(scn.nextLine());
+                    kalender.visBookingerForDag(dato3);
+                    System.out.println();
+                case 4:
                     menuStart();
                     break;
-                case 4:
-                    //Til bogføring menu
+                case 5:
                     valgBogfoering();
                     break;
                 default:
