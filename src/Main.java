@@ -95,7 +95,7 @@ class Menuer {  //UI Klasse
 
             int valg = scn.nextInt();
             scn.nextLine();
-           // boolean isItWeekend;
+
 
 
             switch (valg) {
