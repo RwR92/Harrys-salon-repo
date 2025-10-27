@@ -1,3 +1,5 @@
+import com.sun.security.jgss.GSSUtil;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Scanner;
@@ -22,6 +24,7 @@ class Menu{
 
     public void startMenu(){
         boolean start = true;
+        boolean erLoggetPaa = false;
 
         while (start){
             String startMenu;
@@ -41,17 +44,23 @@ class Menu{
 
             switch (startMenu){
                 case "1":
-                    System.out.println("Skriv password for at se bogføring");
-                    String password = Tools.scan.nextLine();
-                    if (password.equals("hairyharry")){
-                        System.out.println("Korrekt password. Åbner bogføring.");
+                    if(erLoggetPaa){
+                        System.out.println("Åbner bogføring.");
                         bogfoering();
                     } else {
-                        System.out.println("Forkert password. Går tilbage til startmenu.");
-                        forkertPassword++;
-                        if (forkertPassword == 3){
-                            System.out.println("Du har brugt for mange forsøg. Lukker systemet.");
-                            System.exit(0);
+                        System.out.println("Skriv password for at se bogføring");
+                        String password = Tools.scan.nextLine();
+                        if (password.equals("hairyharry")){
+                            System.out.println("Korrekt password. Åbner bogføring.");
+                            erLoggetPaa = true;
+                            bogfoering();
+                        } else {
+                            System.out.println("Forkert password. Går tilbage til startmenu.");
+                            forkertPassword++;
+                            if (forkertPassword == 3){
+                                System.out.println("Du har brugt for mange forsøg. Lukker systemet.");
+                                System.exit(0);
+                            }
                         }
                     }
                     break; // end of case "1"
@@ -85,8 +94,13 @@ class Menu{
 
             switch (valg) {
                 case "1":
+                    System.out.println("Hvilken dato vil du se regninger for?");
+                    LocalDate fakturaForBestemtDag = LocalDate.parse(Tools.scan.nextLine());
+                    kalender.hentFakturaForDag(fakturaForBestemtDag);
                     break;
                 case "2":
+                    System.out.println("Udskriver alle regninger");
+                    kalender.hentAlleFaktura();
                     break;
                 case "3":
                     loop = false;

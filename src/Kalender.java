@@ -99,6 +99,30 @@ public class Kalender {
         return samletRegning;
     }
 
+    public int samletRegning(){ // ansvar = beløb tjent i alt
+        int regningForAlt = 0;
+        for (Kvittering k : faktura){
+             regningForAlt += k.getPris();
+        }
+        return regningForAlt;
+    }
+
+    public void hentFakturaForDag(LocalDate dag){ // ansvar = oversigt over dagens service og penge tjent på dagen
+        for(Kvittering k : faktura){
+            if(k.getDag().equals(dag)){
+                System.out.println(k);
+            }
+        }
+        System.out.println("Samlet beløb for dagen = "+samletRegningForDag(dag));
+        System.out.println();
+    }
+
+    public void hentAlleFaktura(){ // ansvar = Oversigt over alle faktura til dato
+        for(Kvittering k : faktura){
+            System.out.println(k);
+        }
+        System.out.println();
+    }
 
     // SIMULATION
     LocalDate dagsDato = LocalDate.of(2025, 10, 27);

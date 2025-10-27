@@ -21,4 +21,8 @@ public class Kvittering {
     public LocalDate getDag(){
         return dag;
     }
+
+    public String toString(){
+        return kunde+" Tid: "+dag+" "+tid+" Pris: "+pris;
+    }
 }
