@@ -141,6 +141,7 @@ class Menuer {  //UI Klasse
                     System.out.println("Dato? (yyyy-mm-dd)");
                     LocalDate dato2=LocalDate.parse(scn.nextLine());
                     kalender.fjernBooking(navn,dato2);
+                    økonomi.gemBooking();
                     break;}
                 case 3:
                     System.out.println("vælg dato du vil se for");
