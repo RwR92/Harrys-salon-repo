@@ -104,7 +104,9 @@ class Menuer {  //UI Klasse
                     String nummer = scn.nextLine();
                     System.out.println("Total pris: ");
                     double totalPrice = scn.nextDouble();
+                    scn.nextLine();
                     Kunde kunde = new Kunde(navn, nummer);
+
 
                     System.out.println("Dato? (yyyy-mm-dd)");
                     LocalDate dato = LocalDate.parse(scn.nextLine());
@@ -135,6 +137,7 @@ class Menuer {  //UI Klasse
                     System.out.println("Kundens navn");
                     String navn=scn.nextLine();
                     System.out.println("kundens dato");
+                    System.out.println("Dato? (yyyy-mm-dd)");
                     LocalDate dato2=LocalDate.parse(scn.nextLine());
                     kalender.fjernBooking(navn,dato2);
                     break;}
