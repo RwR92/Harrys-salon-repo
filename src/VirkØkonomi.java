@@ -1,12 +1,11 @@
 import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 
 public class VirkØkonomi {
-    private Kalender2 kalender;
+    private Kalender kalender;
 
-    public VirkØkonomi (Kalender2 kalender) {
+    public VirkØkonomi (Kalender kalender) {
         this.kalender = kalender;
     }
 
@@ -59,7 +58,7 @@ public class VirkØkonomi {
 
 
     public static void main(String[] args) {
-        Kalender2 kalender = new Kalender2();
+        Kalender kalender = new Kalender();
        VirkØkonomi økonomi = new VirkØkonomi(kalender);
 
         Kunde kunde = new Kunde("Ava", "30222230");

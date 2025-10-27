@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -6,7 +5,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Kalender2 k=new Kalender2();
+        Kalender k=new Kalender();
         VirkØkonomi økonomi = new VirkØkonomi(k);
         Menuer m=new Menuer(k, økonomi);
         m.menuStart();
@@ -16,11 +15,11 @@ public class Main {
 class Menuer {  //UI Klasse
     boolean start = true;
     Scanner scn = new Scanner(System.in);
-    Kalender2 kalender;
+    Kalender kalender;
     VirkØkonomi økonomi;
 
 
-    Menuer(Kalender2 kalender, VirkØkonomi økonomi) {
+    Menuer(Kalender kalender, VirkØkonomi økonomi) {
         this.kalender = kalender;
         this.økonomi=økonomi;
     }
