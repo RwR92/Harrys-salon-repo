@@ -1,3 +1,4 @@
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -68,10 +69,10 @@ class Menuer {  //UI Klasse
                     System.out.println("udskriver specifik dato");
                     break;
                 case 2:
-                    System.out.println("udskriver alle kvitteringer");
+                    System.out.println("Udskriver alle kvitteringer");
                     break;
                 case 3:
-                    System.out.println("gå tilbage til startmenu");
+                    System.out.println("Gå tilbage til startmenu");
                     menuStart();  //metodekald til startmenu
                 case 4:
                     bookValg();
@@ -79,18 +80,18 @@ class Menuer {  //UI Klasse
                 case 5:
 
                 default:
-                    System.out.println("ugyldigt input");
+                    System.out.println("Ugyldigt input");
             }//switch with valgBogfoering
         }//Whileloop for valgBogfoering
     } //public void valgBogfoering
 
     public void bookValg() {
         while (start) {
-            System.out.println("Tast 1: opret booking");
-            System.out.println("Tast 2: for at slette booking");
-            System.out.println("Tast 3: for at vise Bookinger for en bestemt dag");
-            System.out.println("Tast 4: for at gå til Startmenu");
-            System.out.println("Tast 5: for at gå til Bogføring");
+            System.out.println("Tast 1: Opret booking");
+            System.out.println("Tast 2: For at slette booking");
+            System.out.println("Tast 3: For at vise Bookinger for en bestemt dag");
+            System.out.println("Tast 4: For at gå til Startmenu");
+            System.out.println("Tast 5: For at gå til Bogføring");
 
             int valg = scn.nextInt();
             scn.nextLine();
@@ -110,6 +111,15 @@ class Menuer {  //UI Klasse
 
                     System.out.println("Dato? (yyyy-mm-dd)");
                     LocalDate dato = LocalDate.parse(scn.nextLine());
+
+                    //Indsætter weekender så de ikke kan bookes
+                    kalender.checkDayOfWeek(dato);
+
+
+
+
+
+
 
                     ArrayList<LocalTime> ledigeTider = kalender.findLedigeTider(dato);
                     if(ledigeTider.isEmpty()){

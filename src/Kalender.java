@@ -1,3 +1,4 @@
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -82,5 +83,14 @@ public class Kalender {
             return false;
         }
         return true;
+    }
+
+    public boolean checkDayOfWeek (LocalDate dato) {
+        DayOfWeek dayOfWeek = dato.getDayOfWeek();
+        if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
+            System.out.println("Du prøver at booke på en weekend, vi har lukket den dag!");
+            return false;
+        }
+            return true;
     }
 }//Kalender class
