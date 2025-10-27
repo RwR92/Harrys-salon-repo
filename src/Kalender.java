@@ -89,8 +89,8 @@ public class Kalender {
         DayOfWeek dayOfWeek = dato.getDayOfWeek();
         if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
             System.out.println("Du prøver at booke på en weekend, vi har lukket den dag!");
-            return false;
-        }
             return true;
+        }
+            return false;
     }
 }//Kalender class

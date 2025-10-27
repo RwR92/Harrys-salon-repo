@@ -95,6 +95,7 @@ class Menuer {  //UI Klasse
 
             int valg = scn.nextInt();
             scn.nextLine();
+           // boolean isItWeekend;
 
 
             switch (valg) {
@@ -112,14 +113,10 @@ class Menuer {  //UI Klasse
                     System.out.println("Dato? (yyyy-mm-dd)");
                     LocalDate dato = LocalDate.parse(scn.nextLine());
 
-                    //Indsætter weekender så de ikke kan bookes
-                    kalender.checkDayOfWeek(dato);
-
-
-
-
-
-
+                    //bruger checkDayOfWeek til at bestemme om det er lukkedag
+                    boolean itIsWeekend = kalender.checkDayOfWeek(dato);
+                    if (itIsWeekend)
+                     break;
 
                     ArrayList<LocalTime> ledigeTider = kalender.findLedigeTider(dato);
                     if(ledigeTider.isEmpty()){
