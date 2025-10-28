@@ -131,6 +131,11 @@ class Menuer {  //UI Klasse
                     if (itIsWeekend)
                      break;
 
+                    //tjekker om det er helligdag
+                    boolean itIsHolyday = ClosingDays.checkHolyDays(dato);
+                    if (itIsHolyday)
+                        break;
+
 
                     ArrayList<LocalTime> ledigeTider = kalender.findLedigeTider(dato);
                     if(ledigeTider.isEmpty()){
