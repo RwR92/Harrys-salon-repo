@@ -26,6 +26,20 @@ class Menuer {  //UI Klasse
     }
 
     public void menuStart() {
+        boolean keepGoing = true;
+
+        while (keepGoing) {
+            System.out.println("Indtast adgangskode");
+            String logIn = scn.nextLine();
+            if (!logIn.equals("hairyharry")) {
+                System.out.println("Forkert - indtast adgangskode");
+                scn.nextLine();
+            }else{
+                System.out.println("Du er logget ind");
+                keepGoing = false;
+            }
+        }
+
         while (start) {
             System.out.println("***Harry's frisør salon***");
             System.out.println("Tast 1: for bogføring");
