@@ -126,7 +126,7 @@ class Menuer {  //UI Klasse
                     System.out.println("Dato? (yyyy-mm-dd)");
                     LocalDate dato = LocalDate.parse(scn.nextLine());
 
-                    //bruger checkDayOfWeek til at bestemme om det er lukkedag
+                    //tjekker om det er weekend
                     boolean itIsWeekend = ClosingDays.checkDayOfWeek(dato);
                     if (itIsWeekend)
                      break;

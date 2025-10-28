@@ -21,18 +21,20 @@ public class ClosingDays {
         try {
             BufferedReader bReader = new BufferedReader(new FileReader("src//HolydayList.txt"));
             ArrayList<String> list = new ArrayList<>();
+            ArrayList<String> list2 = new ArrayList<>();
             String linje = bReader.readLine();
 
             while (linje != null) {
                 String[] bidder = linje.split(";");
                 String holyday = bidder[0];
                 String date = bidder[1];
-                list.add(date);
+                list.add(holyday);
+                list2.add(date);
                 linje = bReader.readLine();              //læs næste linje
             }
             bReader.close();
-            if (list.contains(dato.toString())) {
-                System.out.println("\u001B[38;2;255;193;7mDu prøver at booke på en helligdag, vi har lukket d. " + dato + "!\u001B[0m");
+            if (list2.contains(dato.toString())) {               //hvis listen holder datoer(toString) fra liste
+                System.out.println("\u001B[38;2;255;193;7mDu prøver at booke på " + list.getFirst() + ", vi har lukket d. " + dato + "!\u001B[0m");
                 return true;
             }
 
