@@ -88,32 +88,8 @@ public class Kalender {
         return true;
     }
 
-    public boolean checkDayOfWeek (LocalDate dato) {
-        DayOfWeek dayOfWeek = dato.getDayOfWeek();
-        if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
-            System.out.println("\u001B[38;2;255;193;7mDu prøver at booke på en weekend, vi har lukket d. " + dato +"!\u001B[0m");
-            return true;
-        }
-        return false;
-    } //checkDayOfWeek
 
-    public boolean checkHolyDays (LocalDate dato) {
-        try {
-            BufferedReader bReader = new BufferedReader(new FileReader("src//HolydayList.txt"));
-            ArrayList<LocalDate> list = new ArrayList<>();
-            String linje = bReader.readLine();
 
-            while (linje!=null) {
-                String [] bidder = linje.split(";");
-
-            }
-
-            return true;
-        } catch (IOException e) {
-            System.out.println("\u001B[31mFejl ved indlæsning af fil!" + e.getMessage() + "\u001B[0m");
-        }
-        return false;
-    } //checkHolyDays
 
 
 }//Kalender class
