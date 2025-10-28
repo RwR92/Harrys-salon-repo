@@ -7,6 +7,14 @@ public class Kalender {
     private final ArrayList<Booking> bookinger = new ArrayList<>();
     private final ArrayList<Booking> arkiv = new ArrayList<>();
     final ArrayList<Kvittering> faktura = new ArrayList<>();
+    FilHaandtering fil;
+
+    public Kalender() {}
+
+    public void filHaandtering(FilHaandtering fil){
+        this.fil = fil;
+    }
+
 
     // METODER TIL BOOKING
     public void tilfoejBooking(Booking booking){ //ansvar = sørge for booking overholder regler og så tilføje det
@@ -27,7 +35,13 @@ public class Kalender {
                 return;
             }
         }
-        System.out.println("Booking oprettet for "+booking.getNavn()+". Tid: "+booking.getDato()+" "+booking.getTid());
+
+        bookinger.add(booking);
+        fil.gemBooking(booking);
+        sortList();
+    }
+
+    public void tilfoejBookingFraFil(Booking booking) {
         bookinger.add(booking);
         sortList();
     }
@@ -36,6 +50,7 @@ public class Kalender {
         boolean fjernetBooking = bookinger.removeIf(b -> b.getTelefon().equals(telefon));
         if (fjernetBooking){
             System.out.println("Booking er fjernet for ["+telefon+"].\n");
+            fil.sletBooking(telefon);
         } else {
             System.out.println("Ingen booking med telefon nummeret ["+telefon+"] blev fundet.\n");
         }
@@ -113,7 +128,7 @@ public class Kalender {
                 System.out.println(k);
             }
         }
-        System.out.println("Samlet beløb for dagen = "+samletRegningForDag(dag));
+        System.out.println("Samlet beløb for dagen: "+samletRegningForDag(dag));
         System.out.println();
     }
 
@@ -121,6 +136,7 @@ public class Kalender {
         for(Kvittering k : faktura){
             System.out.println(k);
         }
+        System.out.println("Samlet beløb: "+samletRegning());
         System.out.println();
     }
 

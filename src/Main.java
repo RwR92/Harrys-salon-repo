@@ -1,5 +1,3 @@
-import com.sun.security.jgss.GSSUtil;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Scanner;
@@ -7,8 +5,13 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Kalender k=new Kalender();
-        Menu m = new Menu(k);
+        FilHaandtering f = new FilHaandtering(k);
+        k.filHaandtering(f);
 
+        f.hentBooking();
+        k.bookingFaerdiggjort();
+
+        Menu m = new Menu(k);
         m.startMenu();
 
     }
@@ -145,6 +148,7 @@ class Menu{
                     System.out.println("Hvilken tid? (hh:mm)");
                     LocalTime tid = LocalTime.parse(Tools.scan.nextLine());
 
+                    System.out.println("Booking oprettet for "+navn+". Tid: "+dato+" "+tid);
                     kalender.tilfoejBooking(new Booking(kunde, dato, tid));
                     break; // end of case "1"
 
