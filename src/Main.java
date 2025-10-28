@@ -32,8 +32,7 @@ class Menuer {  //UI Klasse
             System.out.println("Indtast adgangskode");
             String logIn = scn.nextLine();
             if (!logIn.equals("hairyharry")) {
-                System.out.println("Forkert - indtast adgangskode");
-                scn.nextLine();
+                System.out.println("Forkert indtastet");
             }else{
                 System.out.println("Du er logget ind");
                 keepGoing = false;
