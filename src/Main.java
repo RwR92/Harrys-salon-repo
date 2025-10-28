@@ -66,11 +66,13 @@ class Menuer {  //UI Klasse
     }//public void menuStart
 
     public void valgBogfoering() {
+        Salg salg=new Salg("ordrer", 0.0);
         while (start) {
             System.out.println("Tast 1: udskriver specifik dato");
             System.out.println("Tast 2: udskriver alle kvitteringer");
             System.out.println("Tast 3: gå tilbage til startmenu");
             System.out.println("Tast 4: gå til Booking");
+            System.out.println("Tast 5: for at se varer");
 
 
             int valg = scn.nextInt();
@@ -91,7 +93,8 @@ class Menuer {  //UI Klasse
                     bookValg();
                     break;
                 case 5:
-
+                    salg.visVarer();
+                    break;
                 default:
                     System.out.println("Ugyldigt input");
             }//switch with valgBogfoering
