@@ -22,7 +22,6 @@ public class Kalender {
                 }
             }
         bookinger.add(b);
-        System.out.println("Booking tilføjet for " + b);
 
     }//tilføjBooking
 

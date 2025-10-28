@@ -8,6 +8,7 @@ public class Main {
     public static void main(String[] args) {
         Kalender k=new Kalender();
         VirkØkonomi økonomi = new VirkØkonomi(k);
+        økonomi.loadFraFil();
         Menuer m=new Menuer(k, økonomi);
         m.menuStart();
     }
@@ -151,7 +152,9 @@ class Menuer {  //UI Klasse
                     //LocalTime tid = LocalTime.parse(scn.nextLine());
 
                     kalender.tilfoejBooking(new Booking(kunde, dato, tid, totalPrice));
+                    System.out.println("Booking tilføjet for " + kunde.getNavn());
                     økonomi.gemBooking();
+                    System.out.println("Bookinger gemt i fil!");
                     menuStart();
                     break;}
                 case 2:{
@@ -165,7 +168,7 @@ class Menuer {  //UI Klasse
                     break;}
                 case 3:
                     System.out.println("vælg dato du vil se for");
-                    LocalDate dato3=LocalDate.parse(scn.nextLine());
+                    String dato3 = scn.nextLine();
                     økonomi.findBooking(dato3);
                 case 4:
                     menuStart();
