@@ -73,6 +73,8 @@ class Menuer {  //UI Klasse
             System.out.println("Tast 3: gå tilbage til startmenu");
             System.out.println("Tast 4: gå til Booking");
             System.out.println("Tast 5: for at se varer");
+            System.out.println("tast 6: for at tilføje varer til systememt");
+            System.out.println("tast 7: for at fjerne en vare fra systemet");
 
 
             int valg = scn.nextInt();
@@ -89,10 +91,28 @@ class Menuer {  //UI Klasse
                 case 3:
                     System.out.println("Gå tilbage til startmenu");
                     menuStart();  //metodekald til startmenu
+                    break;
                 case 4:
                     bookValg();
                     break;
                 case 5:
+                    salg.visVarer();
+                    break;
+                case 6:
+                    System.out.println("Varen/servicens navn:");
+                    String navn= scn.nextLine();
+                    System.out.println("Varen/servicens pris:");
+                    String prisTekst= scn.nextLine();
+                    double pris = Double.parseDouble(String.valueOf(prisTekst));
+                    salg.tilfoejVarer(new Salg.Vare(navn,pris));
+                    System.out.println("Opdateret Vare/serviceliste:");
+                    salg.visVarer();
+                    break;
+                case 7:
+                    System.out.println("Skriv navnet på den vare/service du vil slette.");
+                    String sletteNavn= scn.nextLine();
+                    salg.fjernVarer(sletteNavn);
+                    System.out.println("Opdateret vare/serviceliste:");
                     salg.visVarer();
                     break;
                 default:

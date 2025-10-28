@@ -16,7 +16,23 @@ public class Salg {
 
 
         }
-    public void tilfoejVarer(Vare vare){
+        public void fjernVarer(String navn){
+        boolean fundet=false;
+        for(int i=0; i< varer.size(); i++){
+            Vare v = varer.get(i);
+            if(v.navn.equalsIgnoreCase(navn)){
+                varer.remove(i);
+                fundet = true;
+                System.out.println("vare/servicens: "+navn+" er slettet.");
+                break;
+            }
+        }
+        if(!fundet){
+            System.out.println("Ingen varer/service med navnet: "+ navn + "blev fundet");
+        }
+
+    }
+    public void tilfoejVarer(Vare vare){ //det behandler både vare og service, men for at undgå bloat hedder det bare vare
         varer.add(vare);
         this.pris += vare.pris;
     }
