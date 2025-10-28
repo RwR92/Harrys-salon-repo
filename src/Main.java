@@ -18,6 +18,7 @@ class Menuer {  //UI Klasse
     Scanner scn = new Scanner(System.in);
     Kalender kalender;
     VirkØkonomi økonomi;
+    boolean keepGoing = true;
 
 
     Menuer(Kalender kalender, VirkØkonomi økonomi) {
@@ -26,7 +27,6 @@ class Menuer {  //UI Klasse
     }
 
     public void menuStart() {
-        boolean keepGoing = true;
 
         while (keepGoing) {
             System.out.println("Indtast adgangskode");
