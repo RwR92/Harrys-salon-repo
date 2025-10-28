@@ -79,3 +79,6 @@ public class VirkØkonomi {
 //    }
 
 }// coomit og oush main, booking klasse,
+
+//Arraylist datoer = loadAndSaveClass.loadHolyDays();
+// for(dato:datoer){if (booking.dato = dato) - annuler booking
