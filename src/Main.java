@@ -106,6 +106,7 @@ class Menuer {  //UI Klasse
             System.out.println("Tast 3: For at vise Bookinger for en bestemt dag");
             System.out.println("Tast 4: For at gå til Startmenu");
             System.out.println("Tast 5: For at gå til Bogføring");
+            System.out.println("Tast 6: Vis ledige tider 4 dage fra dato");
 
             int valg = scn.nextInt();
             scn.nextLine();
@@ -181,6 +182,12 @@ class Menuer {  //UI Klasse
                 case 5:
                     valgBogfoering();
                     break;
+                case 6: {
+                    System.out.println("Dato? (yyyy-mm-dd)");
+                    LocalDate d = LocalDate.parse(scn.nextLine());
+                    kalender.visLedigeTiderFor4Dage(d);
+                    break;
+                }
                 default:
                     System.out.println("ugyldigt input");
             } //switch til bookvalg

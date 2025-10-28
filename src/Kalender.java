@@ -36,14 +36,31 @@ public class Kalender {
         }
     }// fjernBooking
 
-    public void visBookingerForDag(LocalDate dato){
-        System.out.println("Bookinger for "+ dato + ":");
-        for(Booking b : bookinger){
-            if(b.getDato().equals(dato)){
-                System.out.println("- "+b.getNavn() +" kl. "+b.getTid()+" ("+b.getDato());
-            }
+    public ArrayList<ArrayList<LocalTime>> visLedigeTiderFor4Dage(LocalDate start){
+        ArrayList<ArrayList<LocalTime>> resultat = new ArrayList<>();
+        LocalDate d = næsteÅbneDag(start);
+        int åbneDage = 0;
+
+        while(åbneDage < 4){
+            ArrayList<LocalTime>ledige = findLedigeTider(d);
+            resultat.add(ledige);
+            System.out.println(d + " -> "+ledige);
+            d = næsteÅbneDag(d.plusDays(1));
+            åbneDage ++;
         }
-    }// visBookingerForDag metode
+        return resultat;
+    }// visLedigeTiderFor4Dage metode
+
+
+    private boolean erLukket(LocalDate d) { //løber dage igennem fra næsteÅbneDag og tjekker om de er åbne eller ej.
+        return ClosingDays.checkDayOfWeek(d) || ClosingDays.checkHolyDays(d);
+    }// erLukket metode
+
+    private LocalDate næsteÅbneDag(LocalDate d) { //tilføjer dage som retunere true i erLukket metoden til visLedigeTiderFor4Dage metoden
+        LocalDate x = d;
+        while (erLukket(x)) x = x.plusDays(1);
+        return x;
+    }// NæsteÅbneDag metode
     
     public boolean erTidOptaget(LocalDate dato, LocalTime tidspunkt){
         for(Booking b : bookinger){
@@ -70,13 +87,11 @@ public class Kalender {
 
     public ArrayList<LocalTime> findLedigeTider(LocalDate dato){
         ArrayList<LocalTime> muligeTider = genererMuligeTider();
-
-        for (Booking b : bookinger){
-            if(b.getDato().equals(dato)){
-                muligeTider.remove(b.getTid());
-            }
+    for (Booking b : bookinger){
+        if(b.getDato().equals(dato)){
+            muligeTider.remove(b.getTid());
         }
-
+}
         return muligeTider;
     }
 
