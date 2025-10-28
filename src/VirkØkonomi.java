@@ -42,9 +42,10 @@ public class VirkØkonomi {
                     String[] bidder = linje.split(";");
                     String tid = bidder[1];
                     String navn = bidder[2];
+                    String pris = bidder[4];
 
                     System.out.println("Bookinger for "+ dato + ":");
-                    System.out.println("- " + navn + " kl. " + tid + " (" + dato + ")");
+                    System.out.println("- " + navn + " kl. " + tid + " Total: " + pris + " kr.");
                     datoFundet = true;
                 }
             }
