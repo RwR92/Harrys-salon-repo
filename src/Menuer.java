@@ -56,39 +56,39 @@ public class Menuer { //UI Klasse
                 keepGoing = false;
             }
         }
-            while (start) {
-                System.out.println("Tast 1: udskriver specifik dato");
-                System.out.println("Tast 2: udskriver alle kvitteringer");
-                System.out.println("Tast 3: gå tilbage til startmenu");
-                System.out.println("Tast 4: gå til Booking");
+        while (start) {
+            System.out.println("Tast 1: udskriver specifik dato");
+            System.out.println("Tast 2: udskriver alle kvitteringer");
+            System.out.println("Tast 3: gå tilbage til startmenu");
+            System.out.println("Tast 4: gå til Booking");
 
 
-                int valg = scn.nextInt();
-                scn.nextLine();
+            int valg = scn.nextInt();
+            scn.nextLine();
 
 
-                switch (valg) {
-                    case 1:
-                        System.out.println("udskriver specifik dato");
-                        break;
-                    case 2:
-                        System.out.println("Udskriver alle kvitteringer");
-                        break;
-                    case 3:
-                        System.out.println("Gå tilbage til startmenu");
-                        menuStart();  //metodekald til startmenu
-                    case 4:
-                        bookValg();
-                        break;
-                    case 5:
+            switch (valg) {
+                case 1:
+                    System.out.println("udskriver specifik dato");
+                    break;
+                case 2:
+                    System.out.println("Udskriver alle kvitteringer");
+                    break;
+                case 3:
+                    System.out.println("Gå tilbage til startmenu");
+                    menuStart();  //metodekald til startmenu
+                case 4:
+                    bookValg();
+                    break;
+                case 5:
 
-                    default:
-                        System.out.println("Ugyldigt input");
-                }//switch with valgBogfoering
-            }
+                default:
+                    System.out.println("Ugyldigt input");
+            }//switch with valgBogfoering
         }
-        //Whileloop for valgBogfoering
-     //public void valgBogfoering
+    }
+    //Whileloop for valgBogfoering
+    //public void valgBogfoering
 
     public void bookValg() {
         while (start) {
