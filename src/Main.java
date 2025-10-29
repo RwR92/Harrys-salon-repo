@@ -1,6 +1,8 @@
 
 public class Main {
     public static void main(String[] args) {
+        Salg.loadServicesFraFil();
+        Salg.loadVareFraFil();
         Kalender k=new Kalender();
         VirkØkonomi økonomi = new VirkØkonomi(k);
         økonomi.loadFraFil();

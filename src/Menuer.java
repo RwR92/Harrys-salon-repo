@@ -24,6 +24,8 @@ public class Menuer { //UI Klasse
             System.out.println("Tast 1: for bogføring");
             System.out.println("Tast 2: for booking");
             System.out.println("Tast 3: for at afslutte");
+            System.out.println("Tast 4: for vare/service");
+            System.out.println("Tast 5: for at oprette kvittering");
 
             int valg = scn.nextInt();
             scn.nextLine();
@@ -38,6 +40,13 @@ public class Menuer { //UI Klasse
                 case 3:
                     System.out.println("\nprogram lukker");
                     start = false;
+                    break;
+                case 4:
+                    vareServiceHaandtering();
+                    break;
+                case 5:
+                    Salg salg=new Salg("order", 0.0);
+                    salg.tilfoejVareTilBooking(scn,kalender,økonomi);
                     break;
                 default:
                     System.out.println("Ugyldigt input");
@@ -69,9 +78,11 @@ public class Menuer { //UI Klasse
                 switch (valg) {
                     case 1:
                         System.out.println("udskriver specifik dato");
+                        Salg.findDagKvittering();
                         break;
                     case 2:
                         System.out.println("Udskriver alle kvitteringer");
+                        Salg.visKvitteringerFraFil();
                         break;
                     case 3:
                         System.out.println("Gå tilbage til startmenu");
@@ -257,5 +268,67 @@ public class Menuer { //UI Klasse
 
         }
     } //gyldigDato metode
+
+    public void vareServiceHaandtering(){
+        Salg salg2=new Salg("ordrer", 0.0);
+
+        while(start){
+            System.out.println("Tast 1: for at tilføje vare til systemet");
+            System.out.println("Tast 2: for at fjerne vare fra systemet");
+            System.out.println("Tast 3: for at se varerene i systemet");
+            System.out.println("Tast 4: for at tilføje services til systemet");
+            System.out.println("Tast 5: for at fjerne Services fra systemet");
+            System.out.println("Tast 6: for at vise services i Systemet");
+
+            int valg = scn.nextInt();
+            scn.nextLine();
+
+            switch(valg){
+                case 1:
+                    System.out.println("Varen/servicens navn:");
+                    String navn= scn.nextLine();
+                    System.out.println("Varen/servicens pris:");
+                    String prisTekst= scn.nextLine();
+                    double pris = Double.parseDouble(String.valueOf(prisTekst));
+                    salg2.tilfoejVarer(new Salg.Vare(navn,pris));
+                    System.out.println("Opdateret Vare/serviceliste:");
+                    salg2.visVarer();
+                    break;
+
+                case 2:
+                    System.out.println("Skriv navnet på den vare/service du vil slette.");
+                    String sletteNavn= scn.nextLine();
+                    salg2.fjernVarer(sletteNavn);
+                    System.out.println("Opdateret vare/serviceliste:");
+                    salg2.visVarer();
+                    break;
+                case 3:
+                    salg2.visVarer();
+                    break;
+                case 4:
+                    System.out.println("Varen/servicens navn:");
+                    navn = scn.nextLine();
+                    System.out.println("Varen/servicens pris:");
+                    prisTekst = scn.nextLine();
+                    pris = Double.parseDouble(String.valueOf(prisTekst));
+                    salg2.tilfoejService(new Salg.Service(navn,pris));
+                    System.out.println("Opdateret Vare/serviceliste:");
+                    salg2.visService();
+                    break;
+                case 5:
+                    System.out.println("Skriv navnet på den service du vil slette.");
+                    sletteNavn = scn.nextLine();
+                    salg2.fjernService(sletteNavn);
+                    System.out.println("Opdateret vare/serviceliste:");
+                    salg2.visService();
+                    break;
+                case 6:
+                    salg2.visService();
+                    break;
+                default:
+                    System.out.println("Ugyldigt input");
+            }
+        }
+    } //Vi håndtere skabelsen af nye ydelser huehuhe
 
 } // Menuer class
