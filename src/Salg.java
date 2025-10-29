@@ -262,7 +262,7 @@ public class Salg {
                     muligServices.add(new Service(navn, pris));
                 }
             }
-            System.out.println("Services indlæst fra fil!");
+
         } catch (IOException e) {
             System.out.println("Fejl ved indlæsning af services: " + e.getMessage());
         }
@@ -279,7 +279,7 @@ public class Salg {
                     muligVarer.add(new Vare(navn, pris));
                 }
             }
-            System.out.println("Varer indlæst fra fil!");
+
         } catch (IOException e) {
             System.out.println("Fejl ved indlæsning af Varer: " + e.getMessage());
         }
