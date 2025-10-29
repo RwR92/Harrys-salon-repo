@@ -29,7 +29,7 @@ public class VirkØkonomi {
         } catch (IOException e) {
             System.out.println("\u001B[31mFejl ved udskrivning af booking!" + e.getMessage() + "\u001B[0m");
         }
-    }
+    }//gemBooking metode
 
     public void findBooking(String dato) {
         try {
@@ -56,7 +56,7 @@ public class VirkØkonomi {
             System.out.println("\u001B[31mFejl ved læsning af fil!" + e.getMessage() + "\u001B[0m");
         }
 
-    }
+    }//findBooking metode
 
     public void loadFraFil() {
         try {
@@ -84,7 +84,7 @@ public class VirkØkonomi {
         } catch (IOException e) {
             System.out.println("\u001B[31mFejl ved udskrivning af booking!" + e.getMessage() + "\u001B[0m");
         }
-    }
+    } //loadFraFil metode
 
 
 //    public static void main(String[] args) {

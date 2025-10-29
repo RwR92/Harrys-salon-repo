@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
@@ -136,7 +135,7 @@ public class Menuer { //UI Klasse
 
         System.out.print("Vælg et nummer for ønsket tid: ");
         String valgteTid1 = scn.nextLine();
-        while(!valgteTid1.matches("\\d") && Integer.parseInt(valgteTid1) > ledigeTider.size()){
+        while (!valgteTid1.matches("\\d") && Integer.parseInt(valgteTid1) > ledigeTider.size()) {
             System.out.print("Skriv et tal :");
             valgteTid1 = scn.nextLine();
         }
@@ -168,7 +167,7 @@ public class Menuer { //UI Klasse
         System.out.print("Dato? (yyyy-mm-dd): ");
         LocalDate d = gyldigDato();
         kalender.visLedigeTiderFor4Dage(d);
-    }
+    } // VisLedigeTider4DageFrem metode
 
     public void bookValg() {
         while (start) {
@@ -221,7 +220,7 @@ public class Menuer { //UI Klasse
             nummer = scn.nextLine();
         }
         return nummer;
-    }
+    } // GyldigtNummer metode
 
     public String gyldigtNavn(String navn) {
         while (!navn.matches("[a-zA-ZæøåÆØÅ\\- ]+")) { //Tjek for om navnet indeholder danske bogstaver eller bindestreg og mellemrum og + for at sike mindst et tegn.
@@ -229,7 +228,7 @@ public class Menuer { //UI Klasse
             navn = scn.nextLine();
         }
         return navn;
-    }
+    } // gyldigtNavn metode
 
     public LocalDate gyldigDato() {
         System.out.print("Dato? (yyyy-mm-dd): ");

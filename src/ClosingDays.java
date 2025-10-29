@@ -15,7 +15,7 @@ public class ClosingDays {
             return true;
         }
         return false;
-    } //checkDayOfWeek
+    } //checkDayOfWeek metode
 
     public static boolean checkHolyDays(LocalDate dato) {
         try {
@@ -42,5 +42,5 @@ public class ClosingDays {
             System.out.println("\u001B[31mFejl ved indlæsning af fil!" + e.getMessage() + "\u001B[0m");
         }
         return false;
-    } //checkHolyDays
+    } //checkHolyDays metode
 }

@@ -19,7 +19,7 @@ public class Kalender {
         }
         bookinger.add(b);
 
-    }//tilføjBooking
+    }//tilføjBooking metoder
 
     public void fjernBooking(String navn, LocalDate dato) {
         for (int i = 0; i < bookinger.size(); i++) {
@@ -57,7 +57,7 @@ public class Kalender {
 
     public ArrayList<Booking> hentAlleBookinger() {
         return bookinger;
-    }
+    } // hentAlleBookinger
 
     public ArrayList<LocalTime> genererMuligeTider() {
         ArrayList<LocalTime> tider = new ArrayList<>();
@@ -67,7 +67,7 @@ public class Kalender {
             tider.add(LocalTime.of(time, 30));
         }
         return tider;
-    }
+    } //genererMuligeTider metode
 
     public ArrayList<LocalTime> findLedigeTider(LocalDate dato) {
         ArrayList<LocalTime> muligeTider = genererMuligeTider();
@@ -87,13 +87,13 @@ public class Kalender {
             }
         }
         return muligeTider;
-    }
+    } //findLedigeTider
 
     public boolean tjekTidsrum(Booking booking) {
         if (booking.getTid().isBefore(LocalTime.of(10, 0)) || booking.getTid().isAfter(LocalTime.of(18, 0))) {
             return false;
         }
         return true;
-    }
+    }//tjekTidsrum
 
 }//Kalender class
