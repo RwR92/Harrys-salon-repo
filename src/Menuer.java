@@ -16,8 +16,120 @@ public class Menuer { //UI Klasse
         this.økonomi = økonomi;
     }
 
-    public void menuStart() {
+    public void opretBooking(){
+    System.out.println("Kundens navn");
+    String navn = scn.nextLine();
+    System.out.println("Kundens nummer");
+    String nummer = scn.nextLine();
+    System.out.println("Total pris: ");
+    double totalPrice = scn.nextDouble();
+    scn.nextLine();
+    Kunde kunde = new Kunde(navn, nummer);
 
+    System.out.println("Dato? (yyyy-mm-dd)");
+    LocalDate dato = LocalDate.parse(scn.nextLine());
+
+    //bruger checkDayOfWeek til at bestemme om det er lukkedag
+    boolean itIsWeekend = ClosingDays.checkDayOfWeek(dato);
+    if (itIsWeekend)
+        return;
+
+    //tjekker om det er helligdag
+    boolean itIsHolyday = ClosingDays.checkHolyDays(dato);
+    if (itIsHolyday)
+        return;
+
+
+    ArrayList<LocalTime> ledigeTider = kalender.findLedigeTider(dato);
+    if (ledigeTider.isEmpty()) {
+        System.out.println("Der er ingen ledige tider den dag.");
+        return;
+    }
+
+    System.out.println("Ledige tider: ");
+    for (int i = 0; i < ledigeTider.size(); i++) {
+        System.out.println((i + 1) + ") " + ledigeTider.get(i));
+    }
+
+    System.out.print("Vælg et nummer for ønsket tid: ");
+    int valgteTid = scn.nextInt();
+    scn.nextLine();
+    LocalTime tid = ledigeTider.get(valgteTid - 1);
+
+    kalender.tilfoejBooking(new Booking(kunde, dato, tid, totalPrice));
+    System.out.println("Booking tilføjet for " + kunde.getNavn());
+    økonomi.gemBooking();
+    System.out.println("Bookinger gemt i fil!");
+    menuStart();
+} //Opret booking.
+
+    public void sletBooking(){
+        System.out.println("Kundens navn");
+        String navn = scn.nextLine();
+        System.out.println("kundens dato");
+        System.out.println("Dato? (yyyy-mm-dd)");
+        LocalDate dato2 = LocalDate.parse(scn.nextLine());
+        kalender.fjernBooking(navn, dato2);
+        økonomi.gemBooking();
+    } //Slet booking.
+
+    public void seBookingBestemtDag(){
+        System.out.println("vælg dato du vil se for");
+        String dato3 = scn.nextLine();
+        økonomi.findBooking(dato3);
+    } //Se bookinger for en bestemt dag.
+
+    public void visLedigeTider4DageFrem(){
+        System.out.println("Dato? (yyyy-mm-dd)");
+        LocalDate d = LocalDate.parse(scn.nextLine());
+        kalender.visLedigeTiderFor4Dage(d);
+    }
+
+    public void bookValg() {
+        while (start) {
+            System.out.println("Tast 1: Opret booking");
+            System.out.println("Tast 2: For at slette booking");
+            System.out.println("Tast 3: For at vise Bookinger for en bestemt dag");
+            System.out.println("Tast 4: For at gå til Startmenu");
+            System.out.println("Tast 5: For at gå til Bogføring");
+            System.out.println("Tast 6: Vis ledige tider 4 dage fra dato");
+
+            int valg = scn.nextInt();
+            scn.nextLine();
+
+
+            switch (valg) {
+                case 1:  //Opretter booking.
+                    opretBooking();
+                    break;
+
+                case 2:  //Slet booking.
+                    sletBooking();
+                    break;
+
+                case 3: // se bookinger for en bestemt dag.
+                    seBookingBestemtDag();
+                    break;
+
+                case 4: // Til hovede menuen.
+                    menuStart();
+                    break;
+
+                case 5: // Til Bogføring menuen.
+                    valgBogfoering();
+                    break;
+
+                case 6: // Printer 4 dage frem med de ledige tider.
+                    visLedigeTider4DageFrem();
+                    break;
+
+                default:
+                    System.out.println("ugyldigt input");
+            } //switch til bookvalg
+        } //while loop til bookvalg
+    } // public void bookValg
+
+    public void menuStart() {
 
         while (start) {
             System.out.println("***Harry's frisør salon***");
@@ -88,100 +200,4 @@ public class Menuer { //UI Klasse
         }
         //Whileloop for valgBogfoering
     } //public void valgBogfoering
-
-    public void bookValg() {
-        while (start) {
-            System.out.println("Tast 1: Opret booking");
-            System.out.println("Tast 2: For at slette booking");
-            System.out.println("Tast 3: For at vise Bookinger for en bestemt dag");
-            System.out.println("Tast 4: For at gå til Startmenu");
-            System.out.println("Tast 5: For at gå til Bogføring");
-            System.out.println("Tast 6: Vis ledige tider 4 dage fra dato");
-
-            int valg = scn.nextInt();
-            scn.nextLine();
-
-
-            switch (valg) {
-                case 1: {
-                    System.out.println("Kundens navn");
-                    String navn = scn.nextLine();
-                    System.out.println("Kundens nummer");
-                    String nummer = scn.nextLine();
-                    System.out.println("Total pris: ");
-                    double totalPrice = scn.nextDouble();
-                    scn.nextLine();
-                    Kunde kunde = new Kunde(navn, nummer);
-
-                    System.out.println("Dato? (yyyy-mm-dd)");
-                    LocalDate dato = LocalDate.parse(scn.nextLine());
-
-                    //bruger checkDayOfWeek til at bestemme om det er lukkedag
-                    boolean itIsWeekend = ClosingDays.checkDayOfWeek(dato);
-                    if (itIsWeekend)
-                        break;
-
-                    //tjekker om det er helligdag
-                    boolean itIsHolyday = ClosingDays.checkHolyDays(dato);
-                    if (itIsHolyday)
-                        break;
-
-
-                    ArrayList<LocalTime> ledigeTider = kalender.findLedigeTider(dato);
-                    if (ledigeTider.isEmpty()) {
-                        System.out.println("Der er ingen ledige tider den dag.");
-                        return;
-                    }
-
-                    System.out.println("Ledige tider: ");
-                    for (int i = 0; i < ledigeTider.size(); i++) {
-                        System.out.println((i + 1) + ") " + ledigeTider.get(i));
-                    }
-
-                    System.out.print("Vælg et nummer for ønsket tid: ");
-                    int valgteTid = scn.nextInt();
-                    scn.nextLine();
-                    LocalTime tid = ledigeTider.get(valgteTid - 1);
-
-                    //System.out.println("Tid (hh:mm)");
-                    //LocalTime tid = LocalTime.parse(scn.nextLine());
-
-                    kalender.tilfoejBooking(new Booking(kunde, dato, tid, totalPrice));
-                    System.out.println("Booking tilføjet for " + kunde.getNavn());
-                    økonomi.gemBooking();
-                    System.out.println("Bookinger gemt i fil!");
-                    menuStart();
-                    break;
-                }
-                case 2: {
-                    System.out.println("Kundens navn");
-                    String navn = scn.nextLine();
-                    System.out.println("kundens dato");
-                    System.out.println("Dato? (yyyy-mm-dd)");
-                    LocalDate dato2 = LocalDate.parse(scn.nextLine());
-                    kalender.fjernBooking(navn, dato2);
-                    økonomi.gemBooking();
-                    break;
-                }
-                case 3:
-                    System.out.println("vælg dato du vil se for");
-                    String dato3 = scn.nextLine();
-                    økonomi.findBooking(dato3);
-                case 4:
-                    menuStart();
-                    break;
-                case 5:
-                    valgBogfoering();
-                    break;
-                case 6: {
-                    System.out.println("Dato? (yyyy-mm-dd)");
-                    LocalDate d = LocalDate.parse(scn.nextLine());
-                    kalender.visLedigeTiderFor4Dage(d);
-                    break;
-                }
-                default:
-                    System.out.println("ugyldigt input");
-            } //switch til bookvalg
-        } //while loop til bookvalg
-    } // public void bookValg
-}
+} // Menuer class
