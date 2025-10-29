@@ -19,8 +19,13 @@ public class Menuer { //UI Klasse
     public void opretBooking(){
     System.out.println("Kundens navn");
     String navn = scn.nextLine();
-    System.out.println("Kundens nummer");
+    System.out.println("Kundens mobil nummer");
     String nummer = scn.nextLine();
+        while(nummer.length() != 8){
+            System.out.println("Nummeret skal være 8 cifre lang.");
+            System.out.println("Kundens mobil nummer");
+            nummer = scn.nextLine();
+        }
     System.out.println("Total pris: ");
     double totalPrice = scn.nextDouble();
     scn.nextLine();
@@ -28,7 +33,11 @@ public class Menuer { //UI Klasse
 
     System.out.println("Dato? (yyyy-mm-dd)");
     LocalDate dato = LocalDate.parse(scn.nextLine());
-
+while(dato.isBefore(LocalDate.now())){
+    System.out.println(dato+ " Er før "+ LocalDate.now()+ " Skriv en gyldig dato.");
+    System.out.println("Dato? (yyyy-mm-dd)");
+    dato = LocalDate.parse(scn.nextLine());
+}
     //bruger checkDayOfWeek til at bestemme om det er lukkedag
     boolean itIsWeekend = ClosingDays.checkDayOfWeek(dato);
     if (itIsWeekend)
