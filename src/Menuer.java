@@ -14,7 +14,7 @@ public class Menuer { //UI Klasse
     Menuer(Kalender kalender, VirkØkonomi økonomi) {
         this.kalender = kalender;
         this.økonomi = økonomi;
-    }
+    } // Menuer constructor.
 
     public void opretBooking(){
     System.out.println("Kundens navn");
