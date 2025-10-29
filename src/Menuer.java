@@ -89,6 +89,7 @@ public class Menuer { //UI Klasse
         }
         //Whileloop for valgBogfoering
     } //public void valgBogfoering
+
     public void opretBooking() {
         System.out.print("Kundens navn: ");
         String navn = scn.nextLine();
@@ -106,8 +107,8 @@ public class Menuer { //UI Klasse
 
         LocalDate dato = gyldigDato();
 
-        while(dato.isBefore(LocalDate.now())){
-            System.out.println(dato+ " Er før "+ LocalDate.now()+ " Skriv en gyldig dato.");
+        while (dato.isBefore(LocalDate.now())) {
+            System.out.println(dato + " Er før " + LocalDate.now() + " Skriv en gyldig dato.");
             System.out.print("Dato? (yyyy-mm-dd): ");
             dato = LocalDate.parse(scn.nextLine());
         }
@@ -134,9 +135,13 @@ public class Menuer { //UI Klasse
         }
 
         System.out.print("Vælg et nummer for ønsket tid: ");
-        int valgteTid = scn.nextInt();
-        scn.nextLine();
-        LocalTime tid = ledigeTider.get(valgteTid - 1);
+        String valgteTid1 = scn.nextLine();
+        while(!valgteTid1.matches("\\d") && Integer.parseInt(valgteTid1) > ledigeTider.size()){
+            System.out.print("Skriv et tal :");
+            valgteTid1 = scn.nextLine();
+        }
+        int valgteTid2 = Integer.parseInt(valgteTid1);
+        LocalTime tid = ledigeTider.get(valgteTid2 - 1);
 
         kalender.tilfoejBooking(new Booking(kunde, dato, tid, totalPrice));
         System.out.println("Booking tilføjet for " + kunde.getNavn());
@@ -144,26 +149,27 @@ public class Menuer { //UI Klasse
         System.out.println("Bookinger gemt i fil!");
         menuStart();
     } //Opret booking.
-    public void sletBooking(){
+
+    public void sletBooking() {
         System.out.print("Kundens navn: ");
         String navn = scn.nextLine();
         navn = gyldigtNavn(navn);
-
         LocalDate dato2 = gyldigDato();
         kalender.fjernBooking(navn, dato2);
         økonomi.gemBooking();
     } //Slet booking.
-    public void seBookingBestemtDag(){
-        System.out.print("Vælg dato du vil se for (yyyy-mm-dd): ");
-        String dato3 = scn.nextLine();
-        økonomi.findBooking(dato3);
-    } //Se bookinger for en bestemt dag.
-    public void visLedigeTider4DageFrem(){
-        System.out.print("Dato? (yyyy-mm-dd): ");
 
+    public void seBookingBestemtDag() {
+        LocalDate dato3 = gyldigDato();
+        økonomi.findBooking(dato3.toString());
+    } //Se bookinger for en bestemt dag.
+
+    public void visLedigeTider4DageFrem() {
+        System.out.print("Dato? (yyyy-mm-dd): ");
         LocalDate d = gyldigDato();
         kalender.visLedigeTiderFor4Dage(d);
     }
+
     public void bookValg() {
         while (start) {
             System.out.println("Tast 1: Opret booking");
@@ -207,16 +213,18 @@ public class Menuer { //UI Klasse
             } //switch til bookvalg
         } //while loop til bookvalg
     } // public void bookValg
-    public String gyldigtNummer(String nummer){
-        while(!nummer.matches("\\d{8}")){ //"\\d{8}" betyder at nummeret skal indeholde cifre fra 0-9 og være 8 lang.
+
+    public String gyldigtNummer(String nummer) {
+        while (!nummer.matches("\\d{8}")) { //"\\d{8}" betyder at nummeret skal indeholde cifre fra 0-9 og være 8 lang.
             System.out.println("Nummeret skal være 8 cifre lang.");
             System.out.print("Kundens mobil nummer: ");
             nummer = scn.nextLine();
         }
         return nummer;
     }
-    public String gyldigtNavn(String navn){
-        while(!navn.matches("[a-zA-ZæøåÆØÅ\\- ]+")){ //Tjek for om navnet indeholder danske bogstaver eller bindestreg og mellemrum og + for at sike mindst et tegn.
+
+    public String gyldigtNavn(String navn) {
+        while (!navn.matches("[a-zA-ZæøåÆØÅ\\- ]+")) { //Tjek for om navnet indeholder danske bogstaver eller bindestreg og mellemrum og + for at sike mindst et tegn.
             System.out.print("Ugyldigt navn, brug bogstaver: ");
             navn = scn.nextLine();
         }
@@ -236,6 +244,6 @@ public class Menuer { //UI Klasse
             }
 
         }
-    }
+    } //gyldigDato metode
 
 } // Menuer class
