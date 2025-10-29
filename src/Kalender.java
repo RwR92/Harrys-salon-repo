@@ -71,6 +71,16 @@ public class Kalender {
 
     public ArrayList<LocalTime> findLedigeTider(LocalDate dato) {
         ArrayList<LocalTime> muligeTider = genererMuligeTider();
+
+        if (dato.equals(LocalDate.now())) {
+            for(int i = 0; i < muligeTider.size(); i++){
+                if(muligeTider.get(i).isBefore(LocalTime.now())){
+                    muligeTider.remove(i);
+                    i--;
+                }
+            }
+        }
+
         for (Booking b : bookinger) {
             if (b.getDato().equals(dato)) {
                 muligeTider.remove(b.getTid());
