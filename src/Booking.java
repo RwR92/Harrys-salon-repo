@@ -30,10 +30,6 @@ public class Booking {
         return kunde.getTelefon();
     }
 
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
     public double getTotalPrice() {
         return totalPrice;
     }

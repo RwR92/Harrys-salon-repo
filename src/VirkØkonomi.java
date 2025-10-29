@@ -12,7 +12,7 @@ public class VirkØkonomi {
 
     public void gemBooking() {
         try {
-            BufferedWriter fil = new BufferedWriter(new FileWriter("src//VirksomhedsØkonomi.txt", false));
+            BufferedWriter fil = new BufferedWriter(new FileWriter("src//ListeBookinger.txt", false));
             PrintWriter filUd = new PrintWriter(fil);
 
             for (Booking b : kalender.hentAlleBookinger()) {
@@ -33,7 +33,7 @@ public class VirkØkonomi {
 
     public void findBooking(String dato) {
         try {
-            BufferedReader buffer = new BufferedReader(new FileReader(("src//VirksomhedsØkonomi.txt")));
+            BufferedReader buffer = new BufferedReader(new FileReader(("src//ListeBookinger.txt")));
             String linje;
             boolean datoFundet = false;
 
@@ -60,7 +60,7 @@ public class VirkØkonomi {
 
     public void loadFraFil() {
         try {
-            FileReader fil = new FileReader("src//VirksomhedsØkonomi.txt");
+            FileReader fil = new FileReader("src//ListeBookinger.txt");
             BufferedReader ind = new BufferedReader(fil);
 
             String linje;

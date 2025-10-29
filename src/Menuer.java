@@ -159,9 +159,22 @@ public class Menuer { //UI Klasse
     } //Slet booking.
 
     public void seBookingBestemtDag() {
-        LocalDate dato3 = gyldigDato();
-        økonomi.findBooking(dato3.toString());
-    } //Se bookinger for en bestemt dag.
+        while (keepGoing) {
+            System.out.println("Indtast adgangskode");
+            String logIn = scn.nextLine();
+            if (!logIn.equals("hairyharry")) {
+                System.out.println("Forkert indtastet");
+            } else {
+                System.out.println("Du er logget ind");
+                keepGoing = false;
+            }
+        }   //spørgAdgangskode
+        LocalDate datoSøg = gyldigDato();
+        LocalDate dateToday = LocalDate.now();
+        if (datoSøg.isBefore(dateToday)) {
+            økonomi.findBooking(datoSøg.toString());
+        } else System.out.println("\u001B[38;2;255;193;7mHer kan du kun se bookinger fra dagen før dags dato!\u001B[0m");
+    }      //Se bookinger for en bestemt dag.
 
     public void visLedigeTider4DageFrem() {
         System.out.print("Dato? (yyyy-mm-dd): ");
