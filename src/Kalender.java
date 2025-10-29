@@ -54,14 +54,6 @@ public class Kalender {
         return x;
     }// NæsteÅbneDag metode
 
-    public boolean erTidOptaget(LocalDate dato, LocalTime tidspunkt) {
-        for (Booking b : bookinger) {
-            if (b.getDato().equals(dato) && b.getTid().equals(tidspunkt)) {
-                return true;
-            }
-        }
-        return false;
-    }//erTidOptaget metode
 
     public ArrayList<Booking> hentAlleBookinger() {
         return bookinger;
