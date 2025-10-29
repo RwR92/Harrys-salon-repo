@@ -33,6 +33,9 @@ public class Booking {
     public double getTotalPrice() {
         return totalPrice;
     }
+    public void setTotalPrice(double totalPrice){
+        this.totalPrice=totalPrice;
+    }
 
 
     public String toString() {
