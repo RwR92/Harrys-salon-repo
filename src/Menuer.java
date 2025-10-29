@@ -55,6 +55,7 @@ public class Menuer { //UI Klasse
                 System.out.println("Du er logget ind");
                 keepGoing = false;
             }
+        }
             while (start) {
                 System.out.println("Tast 1: udskriver specifik dato");
                 System.out.println("Tast 2: udskriver alle kvitteringer");
@@ -87,7 +88,7 @@ public class Menuer { //UI Klasse
             }
         }
         //Whileloop for valgBogfoering
-    } //public void valgBogfoering
+     //public void valgBogfoering
 
     public void bookValg() {
         while (start) {
