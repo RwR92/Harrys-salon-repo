@@ -6,41 +6,41 @@ public class Kalender {
     private ArrayList<Booking> bookinger = new ArrayList<>();
 
 
-    public void tilfoejBooking(Booking b){
-        if(!tjekTidsrum(b)){
+    public void tilfoejBooking(Booking b) {
+        if (!tjekTidsrum(b)) {
             System.out.println("Booking skal være inde for tidsrummet 10:00 til 18:00.\n");
             return;
         }
-            for(Booking eksisterende : bookinger){
-                if(eksisterende.getDato().equals(b.getDato()) && eksisterende.getTid().equals(b.getTid())){
-                    System.out.println("Tidspunktet er optaget.");
-                    return;
-                }
+        for (Booking eksisterende : bookinger) {
+            if (eksisterende.getDato().equals(b.getDato()) && eksisterende.getTid().equals(b.getTid())) {
+                System.out.println("Tidspunktet er optaget.");
+                return;
             }
+        }
         bookinger.add(b);
 
     }//tilføjBooking
 
-    public void fjernBooking(String navn, LocalDate dato){
-        for(int i = 0; i < bookinger.size(); i++){
+    public void fjernBooking(String navn, LocalDate dato) {
+        for (int i = 0; i < bookinger.size(); i++) {
             Booking b = bookinger.get(i);
-            if(b.getNavn().equals(navn) && b.getDato().equals(dato)){
+            if (b.getNavn().equals(navn) && b.getDato().equals(dato)) {
                 bookinger.remove(i);
-                System.out.println("Booking er fjernet for "+ navn);
+                System.out.println("Booking er fjernet for " + navn);
                 return;
             }
         }
     }// fjernBooking
 
-    public void visLedigeTiderFor4Dage(LocalDate start){
+    public void visLedigeTiderFor4Dage(LocalDate start) {
         LocalDate d = næsteÅbneDag(start);
         int åbneDage = 0;
 
-        while(åbneDage < 4){
-            ArrayList<LocalTime>ledige = findLedigeTider(d);
-            System.out.println(d + " -> "+ledige);
+        while (åbneDage < 4) {
+            ArrayList<LocalTime> ledige = findLedigeTider(d);
+            System.out.println(d + " -> " + ledige);
             d = næsteÅbneDag(d.plusDays(1));
-            åbneDage ++;
+            åbneDage++;
         }
     }// visLedigeTiderFor4Dage metode
 
@@ -53,42 +53,42 @@ public class Kalender {
         while (erLukket(x)) x = x.plusDays(1);
         return x;
     }// NæsteÅbneDag metode
-    
-    public boolean erTidOptaget(LocalDate dato, LocalTime tidspunkt){
-        for(Booking b : bookinger){
-            if(b.getDato().equals(dato) && b.getTid().equals(tidspunkt)){
+
+    public boolean erTidOptaget(LocalDate dato, LocalTime tidspunkt) {
+        for (Booking b : bookinger) {
+            if (b.getDato().equals(dato) && b.getTid().equals(tidspunkt)) {
                 return true;
             }
         }
         return false;
     }//erTidOptaget metode
 
-    public ArrayList<Booking>hentAlleBookinger(){
+    public ArrayList<Booking> hentAlleBookinger() {
         return bookinger;
     }
 
-    public ArrayList<LocalTime> genererMuligeTider(){
+    public ArrayList<LocalTime> genererMuligeTider() {
         ArrayList<LocalTime> tider = new ArrayList<>();
 
-        for (int time = 10; time < 18; time ++){
-            tider.add(LocalTime.of(time,0));
+        for (int time = 10; time < 18; time++) {
+            tider.add(LocalTime.of(time, 0));
             tider.add(LocalTime.of(time, 30));
         }
         return tider;
     }
 
-    public ArrayList<LocalTime> findLedigeTider(LocalDate dato){
+    public ArrayList<LocalTime> findLedigeTider(LocalDate dato) {
         ArrayList<LocalTime> muligeTider = genererMuligeTider();
-    for (Booking b : bookinger){
-        if(b.getDato().equals(dato)){
-            muligeTider.remove(b.getTid());
+        for (Booking b : bookinger) {
+            if (b.getDato().equals(dato)) {
+                muligeTider.remove(b.getTid());
+            }
         }
-}
         return muligeTider;
     }
 
-    public boolean tjekTidsrum(Booking booking){
-        if (booking.getTid().isBefore(LocalTime.of(10, 0)) || booking.getTid().isAfter(LocalTime.of(18, 0))){
+    public boolean tjekTidsrum(Booking booking) {
+        if (booking.getTid().isBefore(LocalTime.of(10, 0)) || booking.getTid().isAfter(LocalTime.of(18, 0))) {
             return false;
         }
         return true;

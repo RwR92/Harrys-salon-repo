@@ -2,23 +2,25 @@ public class Kunde {
     private String navn;
     private String telefon;
 
-    public Kunde(String navn, String telefon){
+    public Kunde(String navn, String telefon) {
         this.navn = navn;
         this.telefon = telefon;
     }
-    public String getNavn(){
+
+    public String getNavn() {
         return navn;
     }
-    public String getTelefon(){
+
+    public String getTelefon() {
         return telefon;
     }
 
-    public String toString(){
-        return navn + " ("+telefon+")";
+    public String toString() {
+        return navn + " (" + telefon + ")";
     }
 }
 
-class testing0{
+class testing0 {
     public static void main(String[] args) {
         String tlf = "20130021";
         Kunde a = new Kunde("Nico", tlf);

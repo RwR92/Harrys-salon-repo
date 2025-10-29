@@ -7,39 +7,40 @@ public class Booking {
     private Kunde kunde;
     private double totalPrice;
 
-    Booking(Kunde kunde, LocalDate dato, LocalTime tid, double totalPrice){
+    Booking(Kunde kunde, LocalDate dato, LocalTime tid, double totalPrice) {
         this.kunde = kunde;
         this.dato = dato;
         this.tid = tid;
-        this.totalPrice=totalPrice;
+        this.totalPrice = totalPrice;
     }
 
-    public LocalTime getTid(){
+    public LocalTime getTid() {
         return tid;
     }
 
-    public LocalDate getDato(){
+    public LocalDate getDato() {
         return dato;
     }
-    public String getNavn(){
+
+    public String getNavn() {
         return kunde.getNavn();
     }
 
-    public String getTelefon(){
+    public String getTelefon() {
         return kunde.getTelefon();
     }
 
-    public void setTotalPrice (double totalPrice) {
-        this.totalPrice=totalPrice;
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
-    public double getTotalPrice () {
+    public double getTotalPrice() {
         return totalPrice;
     }
 
 
-    public String toString(){
-        return kunde+" "+getDato()+" "+ getTid() + " TOTAL: " + getTotalPrice() + "Kr.";
+    public String toString() {
+        return kunde + " " + getDato() + " " + getTid() + " TOTAL: " + getTotalPrice() + "Kr.";
     }
 }
 
