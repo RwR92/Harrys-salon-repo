@@ -1,7 +1,3 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -36,21 +32,17 @@ public class Kalender {
         }
     }// fjernBooking
 
-    public ArrayList<ArrayList<LocalTime>> visLedigeTiderFor4Dage(LocalDate start){
-        ArrayList<ArrayList<LocalTime>> resultat = new ArrayList<>();
+    public void visLedigeTiderFor4Dage(LocalDate start){
         LocalDate d = næsteÅbneDag(start);
         int åbneDage = 0;
 
         while(åbneDage < 4){
             ArrayList<LocalTime>ledige = findLedigeTider(d);
-            resultat.add(ledige);
             System.out.println(d + " -> "+ledige);
             d = næsteÅbneDag(d.plusDays(1));
             åbneDage ++;
         }
-        return resultat;
     }// visLedigeTiderFor4Dage metode
-
 
     private boolean erLukket(LocalDate d) { //løber dage igennem fra næsteÅbneDag og tjekker om de er åbne eller ej.
         return ClosingDays.checkDayOfWeek(d) || ClosingDays.checkHolyDays(d);
@@ -101,9 +93,5 @@ public class Kalender {
         }
         return true;
     }
-
-
-
-
 
 }//Kalender class

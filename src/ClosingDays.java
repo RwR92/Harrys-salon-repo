@@ -43,7 +43,4 @@ public class ClosingDays {
         }
         return false;
     } //checkHolyDays
-
-
-
 }
