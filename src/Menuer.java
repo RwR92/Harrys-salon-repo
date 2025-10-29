@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -89,23 +90,25 @@ public class Menuer { //UI Klasse
         //Whileloop for valgBogfoering
     } //public void valgBogfoering
     public void opretBooking() {
-
-        System.out.print("Kundens navn :");
+        System.out.print("Kundens navn: ");
         String navn = scn.nextLine();
         navn = gyldigtNavn(navn);
-        System.out.print("Kundens mobil nummer :");
+
+        System.out.print("Kundens mobil nummer: ");
         String nummer = scn.nextLine();
         nummer = gyldigtNummer(nummer);
+
         System.out.print("Total pris: ");
         double totalPrice = scn.nextDouble();
         scn.nextLine();
+
         Kunde kunde = new Kunde(navn, nummer);
 
-        System.out.print("Dato? (yyyy-mm-dd) :");
-        LocalDate dato = (LocalDate.parse(scn.nextLine()));
+        LocalDate dato = gyldigDato();
+
         while(dato.isBefore(LocalDate.now())){
             System.out.println(dato+ " Er før "+ LocalDate.now()+ " Skriv en gyldig dato.");
-            System.out.print("Dato? (yyyy-mm-dd) :");
+            System.out.print("Dato? (yyyy-mm-dd): ");
             dato = LocalDate.parse(scn.nextLine());
         }
         //bruger checkDayOfWeek til at bestemme om det er lukkedag
@@ -142,22 +145,23 @@ public class Menuer { //UI Klasse
         menuStart();
     } //Opret booking.
     public void sletBooking(){
-        System.out.print("Kundens navn :");
+        System.out.print("Kundens navn: ");
         String navn = scn.nextLine();
         navn = gyldigtNavn(navn);
-        System.out.print("kundens dato (yyyy-mm-dd) :");
-        LocalDate dato2 = LocalDate.parse(scn.nextLine());
+
+        LocalDate dato2 = gyldigDato();
         kalender.fjernBooking(navn, dato2);
         økonomi.gemBooking();
     } //Slet booking.
     public void seBookingBestemtDag(){
-        System.out.println("vælg dato du vil se for");
+        System.out.print("Vælg dato du vil se for (yyyy-mm-dd): ");
         String dato3 = scn.nextLine();
         økonomi.findBooking(dato3);
     } //Se bookinger for en bestemt dag.
     public void visLedigeTider4DageFrem(){
-        System.out.println("Dato? (yyyy-mm-dd)");
-        LocalDate d = LocalDate.parse(scn.nextLine());
+        System.out.print("Dato? (yyyy-mm-dd): ");
+
+        LocalDate d = gyldigDato();
         kalender.visLedigeTiderFor4Dage(d);
     }
     public void bookValg() {
@@ -206,17 +210,32 @@ public class Menuer { //UI Klasse
     public String gyldigtNummer(String nummer){
         while(!nummer.matches("\\d{8}")){ //"\\d{8}" betyder at nummeret skal indeholde cifre fra 0-9 og være 8 lang.
             System.out.println("Nummeret skal være 8 cifre lang.");
-            System.out.print("Kundens mobil nummer :");
+            System.out.print("Kundens mobil nummer: ");
             nummer = scn.nextLine();
         }
         return nummer;
     }
     public String gyldigtNavn(String navn){
         while(!navn.matches("[a-zA-ZæøåÆØÅ\\- ]+")){ //Tjek for om navnet indeholder danske bogstaver eller bindestreg og mellemrum og + for at sike mindst et tegn.
-            System.out.print("Ugyldigt navn, brug bogstaver :");
+            System.out.print("Ugyldigt navn, brug bogstaver: ");
             navn = scn.nextLine();
         }
         return navn;
+    }
+
+    public LocalDate gyldigDato() {
+        System.out.print("Dato? (yyyy-mm-dd): ");
+
+        while (true) {
+            try {
+                LocalDate dato = LocalDate.parse(scn.nextLine());
+                return dato;
+            } catch (DateTimeParseException e) {
+                System.out.print("Ugyldig dato, prøv igen (yyyy-mm-dd): ");
+
+            }
+
+        }
     }
 
 } // Menuer class
