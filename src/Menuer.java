@@ -32,7 +32,7 @@ public class Menuer { //UI Klasse
             System.out.println("Tast 5: for at oprette kvittering");
 
             String valg = scn.nextLine();
-            switchValg = gyldigtValgTilMenuer(valg);
+            switchValg = SystemUtility.gyldigtValgTilMenuer(valg,scn);
 
             switch (switchValg) {
                 case 1:
@@ -78,7 +78,7 @@ public class Menuer { //UI Klasse
 
 
                 String valg = scn.nextLine();
-                switchValg = gyldigtValgTilMenuer(valg);
+                switchValg = SystemUtility.gyldigtValgTilMenuer(valg,scn);
 
 
                 switch (switchValg) {
@@ -117,7 +117,7 @@ public class Menuer { //UI Klasse
             System.out.println("Tast 7: Vis ledige tider 4 dage fra dato");
 
             String valg = scn.nextLine();
-            switchValg = gyldigtValgTilMenuer(valg);
+            switchValg = SystemUtility.gyldigtValgTilMenuer(valg,scn);
 
 
             switch (switchValg) {
@@ -158,17 +158,17 @@ public class Menuer { //UI Klasse
     public void opretBooking() {
         System.out.print("Kundens navn: ");
         String navn = scn.nextLine();
-        navn = gyldigtNavn(navn);
+        navn = SystemUtility.gyldigtNavn(navn,scn);
 
         System.out.print("Kundens mobil nummer: ");
         String nummer = scn.nextLine();
-        nummer = gyldigtNummer(nummer);
+        nummer = SystemUtility.gyldigtNummer(nummer,scn);
 
         double totalPrice = 0;
 
         Kunde kunde = new Kunde(navn, nummer);
 
-        LocalDate dato = gyldigDato();
+        LocalDate dato = SystemUtility.gyldigDato(scn);
 
         while (dato.isBefore(LocalDate.now())) {
             System.out.println(dato + " Er før " + LocalDate.now() + " Skriv en gyldig dato.");
@@ -216,8 +216,8 @@ public class Menuer { //UI Klasse
     public void sletBooking() {
         System.out.print("Kundens navn: ");
         String navn = scn.nextLine();
-        navn = gyldigtNavn(navn);
-        LocalDate dato2 = gyldigDato();
+        navn = SystemUtility.gyldigtNavn(navn,scn);
+        LocalDate dato2 = SystemUtility.gyldigDato(scn);
         kalender.fjernBooking(navn, dato2);
         økonomi.gemBooking();
     } //Slet booking.
@@ -233,7 +233,7 @@ public class Menuer { //UI Klasse
                 keepGoing = false;
             }
         }   //spørgAdgangskode
-        LocalDate datoSøg = gyldigDato();
+        LocalDate datoSøg = SystemUtility.gyldigDato(scn);
         LocalDate dateToday = LocalDate.now();
         if (datoSøg.isBefore(dateToday)) {
             økonomi.findBooking(datoSøg.toString());
@@ -243,7 +243,7 @@ public class Menuer { //UI Klasse
     public static  void findDagBooking() {
         Scanner scn = new Scanner(System.in);
         System.out.println("Dato for Booking yyyy-mm-dd");
-        String soegedato = scn.nextLine();
+        String soegedato = String.valueOf(SystemUtility.gyldigDato(scn));
 
         try (BufferedReader br = new BufferedReader(new FileReader("src//ListeBookinger.txt"))) {
             boolean fundet = false;
@@ -266,67 +266,9 @@ public class Menuer { //UI Klasse
     } //find booking for hvilken som helst dag. og kun specifikke dag
 
     public void visLedigeTider4DageFrem() {
-        LocalDate d = gyldigDato();
+        LocalDate d = SystemUtility.gyldigDato(scn);
         kalender.visLedigeTiderFor4Dage(d);
     } // VisLedigeTider4DageFrem metode
-
-    public int gyldigtValgTilMenuer(String valgIn) {
-        while (!valgIn.matches("\\d+")) {
-            System.out.print("Ugyldigt valg. Brug et tal :");
-            valgIn = scn.nextLine();
-        }
-        return Integer.parseInt(valgIn.trim());
-    } //gyldigtValgTilMenuer metode
-
-    public String gyldigtNummer(String nummer) {
-        while (!nummer.matches("\\d{8}")) { //"\\d{8}" betyder at nummeret skal indeholde cifre fra 0-9 og være 8 lang.
-            System.out.println("Nummeret skal være 8 cifre lang.");
-            System.out.print("Kundens mobil nummer: ");
-            nummer = scn.nextLine();
-        }
-        return nummer;
-    } // GyldigtNummer metode
-
-    public String gyldigtNavn(String navn) {
-        while (!navn.matches("[a-zA-ZæøåÆØÅ\\- ]+")) { //Tjek for om navnet indeholder danske bogstaver eller bindestreg og mellemrum og + for at sike mindst et tegn.
-            System.out.print("Ugyldigt navn, brug bogstaver: ");
-            navn = scn.nextLine();
-        }
-        return navn;
-    } // gyldigtNavn metode
-
-    public LocalDate gyldigDato() {
-        System.out.print("Dato? (yyyy-mm-dd): ");
-
-        while (true) {
-            try {
-                LocalDate dato = LocalDate.parse(scn.nextLine());
-                return dato;
-            } catch (DateTimeParseException e) {
-                System.out.print("Ugyldig dato, prøv igen (yyyy-mm-dd): ");
-
-            }
-
-        }
-    } //gyldigDato metode
-
-    public String gyldigPrisForStrings(String pris){
-        while(!pris.matches("\\d+")){
-            System.out.println("Prisen kan kun indeholde tal.");
-            System.out.print("Varen/servicens pris :");
-            pris = scn.nextLine();
-        }
-        return pris;
-    } //gyldigPrisForStrings metode
-
-    public Double gyldigPrisForDouble(String prisIn){
-        while(!prisIn.matches("\\d+(\\.\\d+)?")){
-            System.out.println("Prisen kan kun indeholde tal.");
-            System.out.print("Varen/servicens pris :");
-            prisIn = scn.nextLine();
-        }
-        return Double.parseDouble(prisIn);
-    }//gyldigPrisForDouble
 
     public void vareServiceHaandtering(){
         Salg salg2=new Salg("ordrer", 0.0);
@@ -342,16 +284,16 @@ public class Menuer { //UI Klasse
             System.out.println("Tast 7: gå tilbage til startmenu");
 
             String valg = scn.nextLine();
-            switchValg = gyldigtValgTilMenuer(valg);
+            switchValg = SystemUtility.gyldigtValgTilMenuer(valg,scn);
 
             switch (switchValg) {
                 case 1: //Tilføje vare
                     System.out.println("Varen/servicens navn:");
                     String navn = scn.nextLine();
-                    navn = gyldigtNavn(navn);
+                    navn = SystemUtility.gyldigtNavn(navn,scn);
                     System.out.println("Varen/servicens pris:");
                     String prisTekst = scn.nextLine();
-                    prisTekst = gyldigPrisForStrings(prisTekst);
+                    prisTekst = SystemUtility.gyldigPrisForStrings(prisTekst,scn);
                     double pris = Double.parseDouble(String.valueOf(prisTekst));
                     salg2.tilfoejVarer(new Salg.Vare(navn, pris));
                     System.out.println("Opdateret Vare/serviceliste:");
@@ -361,7 +303,7 @@ public class Menuer { //UI Klasse
                 case 2: //Fjerne vare
                     System.out.println("Skriv navnet på den vare/service du vil slette.");
                     String sletteNavn = scn.nextLine();
-                    sletteNavn = gyldigtNavn(sletteNavn);
+                    sletteNavn = SystemUtility.gyldigtNavn(sletteNavn,scn);
                     salg2.fjernVarer(sletteNavn);
                     System.out.println("Opdateret vare/serviceliste:");
                     salg2.visVarer();
@@ -372,10 +314,10 @@ public class Menuer { //UI Klasse
                 case 4: //Tilføj service
                     System.out.println("Varen/servicens navn:");
                     navn = scn.nextLine();
-                    navn = gyldigtNavn(navn);
+                    navn = SystemUtility.gyldigtNavn(navn,scn);
                     System.out.println("Varen/servicens pris:");
                     prisTekst = scn.nextLine();
-                    prisTekst = gyldigPrisForStrings(prisTekst);
+                    prisTekst = SystemUtility.gyldigPrisForStrings(prisTekst,scn);
                     pris = Double.parseDouble(String.valueOf(prisTekst));
                     salg2.tilfoejService(new Salg.Service(navn, pris));
                     System.out.println("Opdateret Vare/serviceliste:");
@@ -384,7 +326,7 @@ public class Menuer { //UI Klasse
                 case 5: //Fjerne Services
                     System.out.println("Skriv navnet på den service du vil slette.");
                     sletteNavn = scn.nextLine();
-                    sletteNavn = gyldigtNavn(sletteNavn);
+                    sletteNavn = SystemUtility.gyldigtNavn(sletteNavn,scn);
                     salg2.fjernService(sletteNavn);
                     System.out.println("Opdateret vare/serviceliste:");
                     salg2.visService();
