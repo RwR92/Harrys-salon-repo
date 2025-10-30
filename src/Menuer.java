@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
@@ -65,7 +68,7 @@ public class Menuer { //UI Klasse
                 keepGoing = false;
             }
             while (start) {
-                System.out.println("Tast 1: udskriver specifik dato");
+                System.out.println("Tast 1: udskriver Kvitteringer for en specifik dato");
                 System.out.println("Tast 2: udskriver alle kvitteringer");
                 System.out.println("Tast 3: gå tilbage til startmenu");
                 System.out.println("Tast 4: gå til Booking");
@@ -104,10 +107,11 @@ public class Menuer { //UI Klasse
         while (start) {
             System.out.println("Tast 1: Opret booking");
             System.out.println("Tast 2: For at slette booking");
-            System.out.println("Tast 3: For at vise Bookinger for en bestemt dag");
-            System.out.println("Tast 4: For at gå til Startmenu");
-            System.out.println("Tast 5: For at gå til Bogføring");
-            System.out.println("Tast 6: Vis ledige tider 4 dage fra dato");
+            System.out.println("Tast 3: For at vise Bookinger for en bestemt dag(kun bagud)");
+            System.out.println("Tast 4: for at se Bookinger, Kun for en bestemt dag");
+            System.out.println("Tast 5: For at gå til Startmenu");
+            System.out.println("Tast 6: For at gå til Bogføring");
+            System.out.println("Tast 7: Vis ledige tider 4 dage fra dato");
 
             int valg = scn.nextInt();
             scn.nextLine();
@@ -122,19 +126,23 @@ public class Menuer { //UI Klasse
                     sletBooking();
                     break;
 
-                case 3: // se bookinger for en bestemt dag.
+                case 3: // se bookinger for en bestemt dag. (kun bagud)
                     seBookingBestemtDag();
                     break;
 
-                case 4: // Til hovede menuen.
+                case 4: //se bookinger på hvilken som helst dag
+                    findDagBooking();
+                    break;
+
+                case 5: // Til hovede menuen.
                     menuStart();
                     break;
 
-                case 5: // Til Bogføring menuen.
+                case 6: // Til Bogføring menuen.
                     valgBogfoering();
                     break;
 
-                case 6: // Printer 4 dage frem med de ledige tider.
+                case 7: // Printer 4 dage frem med de ledige tider.
                     visLedigeTider4DageFrem();
                     break;
 
@@ -153,9 +161,7 @@ public class Menuer { //UI Klasse
         String nummer = scn.nextLine();
         nummer = gyldigtNummer(nummer);
 
-        System.out.print("Total pris: ");
-        double totalPrice = scn.nextDouble();
-        scn.nextLine();
+        double totalPrice = 0;
 
         Kunde kunde = new Kunde(navn, nummer);
 
@@ -229,9 +235,34 @@ public class Menuer { //UI Klasse
         if (datoSøg.isBefore(dateToday)) {
             økonomi.findBooking(datoSøg.toString());
         } else System.out.println("\u001B[38;2;255;193;7mHer kan du kun se bookinger fra dagen før dags dato!\u001B[0m");
-    }      //Se bookinger for en bestemt dag.
+    }      //Se bookinger for en bestemt dag. men kun bagud
 
-    public void visLedigeTider4DageFrem() {
+    public static  void findDagBooking() {
+        Scanner scn = new Scanner(System.in);
+        System.out.println("Dato for Booking yyyy-mm-dd");
+        String soegedato = scn.nextLine();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("src//ListeBookinger.txt"))) {
+            boolean fundet = false;
+            String linje;
+            while ((linje = br.readLine()) != null) {
+                if (linje.startsWith(soegedato)) {
+                    System.out.println(linje);
+                    fundet = true;
+                }
+            }
+            if (!fundet) {
+                System.out.println("ingen Bookinger på: " + soegedato);
+                System.out.println("");
+            }
+        } catch (IOException e) {
+            System.out.println("fejl ved læsning" + e.getMessage());
+        }
+
+        Booking booking = null;
+    }
+
+        public void visLedigeTider4DageFrem() {
         System.out.print("Dato? (yyyy-mm-dd): ");
         LocalDate d = gyldigDato();
         kalender.visLedigeTiderFor4Dage(d);
