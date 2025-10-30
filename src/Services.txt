@@ -1,1 +1,3 @@
- Klip;150.0
+ massage;350.0
+ Herreklip;200.0
+ Kvindeklip;400.0
