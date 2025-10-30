@@ -266,7 +266,6 @@ public class Menuer { //UI Klasse
     } //find booking for hvilken som helst dag. og kun specifikke dag
 
     public void visLedigeTider4DageFrem() {
-        System.out.print("Dato? (yyyy-mm-dd): ");
         LocalDate d = gyldigDato();
         kalender.visLedigeTiderFor4Dage(d);
     } // VisLedigeTider4DageFrem metode
