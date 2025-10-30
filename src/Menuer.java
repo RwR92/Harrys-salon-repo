@@ -45,8 +45,8 @@ public class Menuer { //UI Klasse
                     vareServiceHaandtering();
                     break;
                 case 5:
-                    Salg salg=new Salg("order", 0.0);
-                    salg.tilfoejVareTilBooking(scn,kalender,økonomi);
+                    Salg salg = new Salg("order", 0.0);
+                    salg.tilfoejVareTilBooking(scn, kalender, økonomi);
                     break;
                 default:
                     System.out.println("Ugyldigt input");
@@ -64,41 +64,42 @@ public class Menuer { //UI Klasse
                 System.out.println("Du er logget ind");
                 keepGoing = false;
             }
-            while (start) {
-                System.out.println("Tast 1: udskriver specifik dato");
-                System.out.println("Tast 2: udskriver alle kvitteringer");
-                System.out.println("Tast 3: gå tilbage til startmenu");
-                System.out.println("Tast 4: gå til Booking");
-
-
-                int valg = scn.nextInt();
-                scn.nextLine();
-
-
-                switch (valg) {
-                    case 1:
-                        System.out.println("udskriver specifik dato");
-                        Salg.findDagKvittering();
-                        break;
-                    case 2:
-                        System.out.println("Udskriver alle kvitteringer");
-                        Salg.visKvitteringerFraFil();
-                        break;
-                    case 3:
-                        System.out.println("Gå tilbage til startmenu");
-                        menuStart();  //metodekald til startmenu
-                    case 4:
-                        bookValg();
-                        break;
-                    case 5:
-
-                    default:
-                        System.out.println("Ugyldigt input");
-                }//switch with valgBogfoering
-            }
         }
-        //Whileloop for valgBogfoering
-    } //public void valgBogfoering
+        while (start) {
+            System.out.println("Tast 1: udskriver specifik dato");
+            System.out.println("Tast 2: udskriver alle kvitteringer");
+            System.out.println("Tast 3: gå tilbage til startmenu");
+            System.out.println("Tast 4: gå til Booking");
+
+
+            int valg = scn.nextInt();
+            scn.nextLine();
+
+
+            switch (valg) {
+                case 1:
+                    System.out.println("udskriver specifik dato");
+                    Salg.findDagKvittering();
+                    break;
+                case 2:
+                    System.out.println("Udskriver alle kvitteringer");
+                    Salg.visKvitteringerFraFil();
+                    break;
+                case 3:
+                    System.out.println("Gå tilbage til startmenu");
+                    menuStart();  //metodekald til startmenu
+                case 4:
+                    bookValg();
+                    break;
+                case 5:
+
+                default:
+                    System.out.println("Ugyldigt input");
+            }//switch with valgBogfoering
+        }
+    }
+    //Whileloop for valgBogfoering
+//public void valgBogfoering
 
     public void opretBooking() {
         System.out.print("Kundens navn: ");
@@ -184,7 +185,8 @@ public class Menuer { //UI Klasse
         LocalDate dateToday = LocalDate.now();
         if (datoSøg.isBefore(dateToday)) {
             økonomi.findBooking(datoSøg.toString());
-        } else System.out.println("\u001B[38;2;255;193;7mHer kan du kun se bookinger fra dagen før dags dato!\u001B[0m");
+        } else
+            System.out.println("\u001B[38;2;255;193;7mHer kan du kun se bookinger fra dagen før dags dato!\u001B[0m");
     }      //Se bookinger for en bestemt dag.
 
     public void visLedigeTider4DageFrem() {
@@ -269,10 +271,10 @@ public class Menuer { //UI Klasse
         }
     } //gyldigDato metode
 
-    public void vareServiceHaandtering(){
-        Salg salg2=new Salg("ordrer", 0.0);
+    public void vareServiceHaandtering() {
+        Salg salg2 = new Salg("ordrer", 0.0);
 
-        while(start){
+        while (start) {
             System.out.println("Tast 1: for at tilføje vare til systemet");
             System.out.println("Tast 2: for at fjerne vare fra systemet");
             System.out.println("Tast 3: for at se varerene i systemet");
@@ -283,21 +285,21 @@ public class Menuer { //UI Klasse
             int valg = scn.nextInt();
             scn.nextLine();
 
-            switch(valg){
+            switch (valg) {
                 case 1:
                     System.out.println("Varen/servicens navn:");
-                    String navn= scn.nextLine();
+                    String navn = scn.nextLine();
                     System.out.println("Varen/servicens pris:");
-                    String prisTekst= scn.nextLine();
+                    String prisTekst = scn.nextLine();
                     double pris = Double.parseDouble(String.valueOf(prisTekst));
-                    salg2.tilfoejVarer(new Salg.Vare(navn,pris));
+                    salg2.tilfoejVarer(new Salg.Vare(navn, pris));
                     System.out.println("Opdateret Vare/serviceliste:");
                     salg2.visVarer();
                     break;
 
                 case 2:
                     System.out.println("Skriv navnet på den vare/service du vil slette.");
-                    String sletteNavn= scn.nextLine();
+                    String sletteNavn = scn.nextLine();
                     salg2.fjernVarer(sletteNavn);
                     System.out.println("Opdateret vare/serviceliste:");
                     salg2.visVarer();
@@ -311,7 +313,7 @@ public class Menuer { //UI Klasse
                     System.out.println("Varen/servicens pris:");
                     prisTekst = scn.nextLine();
                     pris = Double.parseDouble(String.valueOf(prisTekst));
-                    salg2.tilfoejService(new Salg.Service(navn,pris));
+                    salg2.tilfoejService(new Salg.Service(navn, pris));
                     System.out.println("Opdateret Vare/serviceliste:");
                     salg2.visService();
                     break;
@@ -329,6 +331,5 @@ public class Menuer { //UI Klasse
                     System.out.println("Ugyldigt input");
             }
         }
-    } //Vi håndtere skabelsen af nye ydelser huehuhe
-
-} // Menuer class
+    }//Vi håndtere skabelsen af nye ydelser huehuhe
+}// Menuer class
