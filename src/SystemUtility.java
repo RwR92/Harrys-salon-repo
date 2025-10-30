@@ -2,7 +2,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 /*
 Dette er en klasse til metoder som kan lave checks på bruger inputs og stoppe evt. fejl før de sker.
-
+Metoderne er static så man ikke behøver at oprette et objekt af systemUtility klassen for at bruge dem.
+Metoderne som har scanner i dem modtager de java.util.Scanner scn, fordi de ikke selv skal oprette en scanner,
+så kan de læse input uden at oprette en scanner.
  */
 public class SystemUtility {
 
