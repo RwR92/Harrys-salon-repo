@@ -111,8 +111,8 @@ public class Menuer { //UI Klasse
         nummer = gyldigtNummer(nummer);
 
         System.out.print("Total pris: ");
-        double totalPrice = scn.nextDouble();
-        scn.nextLine();
+        String totalPrice = scn.nextLine();
+        double totalPriceD = gyldigPrisForDouble(totalPrice);
 
         Kunde kunde = new Kunde(navn, nummer);
 
@@ -126,7 +126,7 @@ public class Menuer { //UI Klasse
         //bruger checkDayOfWeek til at bestemme om det er lukkedag
         boolean itIsWeekend = ClosingDays.checkDayOfWeek(dato);
         if (itIsWeekend)
-            return;
+            return; //Hopper ud af nuværende loop.
 
         //tjekker om det er helligdag
         boolean itIsHolyday = ClosingDays.checkHolyDays(dato);
@@ -154,7 +154,7 @@ public class Menuer { //UI Klasse
         int valgteTid2 = Integer.parseInt(valgteTid1);
         LocalTime tid = ledigeTider.get(valgteTid2 - 1);
 
-        kalender.tilfoejBooking(new Booking(kunde, dato, tid, totalPrice));
+        kalender.tilfoejBooking(new Booking(kunde, dato, tid, totalPriceD));
         System.out.println("Booking tilføjet for " + kunde.getNavn());
         økonomi.gemBooking();
         System.out.println("Bookinger gemt i fil!");
@@ -271,8 +271,26 @@ public class Menuer { //UI Klasse
         }
     } //gyldigDato metode
 
-    public void vareServiceHaandtering() {
-        Salg salg2 = new Salg("ordrer", 0.0);
+    public String gyldigPrisForStrings(String pris){
+        while(!pris.matches("\\d+")){
+            System.out.println("Prisen kan kun indeholde tal.");
+            System.out.print("Varen/servicens pris :");
+            pris = scn.nextLine();
+        }
+        return pris;
+    }
+
+    public Double gyldigPrisForDouble(String prisIn){
+        while(!prisIn.matches("\\d+(\\.\\d+)?")){
+            System.out.println("Prisen kan kun indeholde tal.");
+            System.out.print("Varen/servicens pris :");
+            prisIn = scn.nextLine();
+        }
+        return Double.parseDouble(prisIn);
+    }
+
+    public void vareServiceHaandtering(){
+        Salg salg2=new Salg("ordrer", 0.0);
 
         while (start) {
             System.out.println("Tast 1: for at tilføje vare til systemet");
@@ -286,20 +304,23 @@ public class Menuer { //UI Klasse
             scn.nextLine();
 
             switch (valg) {
-                case 1:
+                case 1: //Tilføje vare
                     System.out.println("Varen/servicens navn:");
                     String navn = scn.nextLine();
+                    navn = gyldigtNavn(navn);
                     System.out.println("Varen/servicens pris:");
                     String prisTekst = scn.nextLine();
+                    prisTekst = gyldigPrisForStrings(prisTekst);
                     double pris = Double.parseDouble(String.valueOf(prisTekst));
                     salg2.tilfoejVarer(new Salg.Vare(navn, pris));
                     System.out.println("Opdateret Vare/serviceliste:");
                     salg2.visVarer();
                     break;
 
-                case 2:
+                case 2: //Fjerne vare
                     System.out.println("Skriv navnet på den vare/service du vil slette.");
                     String sletteNavn = scn.nextLine();
+                    sletteNavn = gyldigtNavn(sletteNavn);
                     salg2.fjernVarer(sletteNavn);
                     System.out.println("Opdateret vare/serviceliste:");
                     salg2.visVarer();
@@ -307,24 +328,27 @@ public class Menuer { //UI Klasse
                 case 3:
                     salg2.visVarer();
                     break;
-                case 4:
+                case 4: //Tilføj service
                     System.out.println("Varen/servicens navn:");
                     navn = scn.nextLine();
+                    navn = gyldigtNavn(navn);
                     System.out.println("Varen/servicens pris:");
                     prisTekst = scn.nextLine();
+                    prisTekst = gyldigPrisForStrings(prisTekst);
                     pris = Double.parseDouble(String.valueOf(prisTekst));
                     salg2.tilfoejService(new Salg.Service(navn, pris));
                     System.out.println("Opdateret Vare/serviceliste:");
                     salg2.visService();
                     break;
-                case 5:
+                case 5: //Fjerne Services
                     System.out.println("Skriv navnet på den service du vil slette.");
                     sletteNavn = scn.nextLine();
+                    sletteNavn = gyldigtNavn(sletteNavn);
                     salg2.fjernService(sletteNavn);
                     System.out.println("Opdateret vare/serviceliste:");
                     salg2.visService();
                     break;
-                case 6:
+                case 6: //Vise services
                     salg2.visService();
                     break;
                 default:
