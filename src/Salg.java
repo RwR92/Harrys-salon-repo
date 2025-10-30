@@ -133,7 +133,7 @@ public class Salg {
             }
         }
         if(!fundet){
-            System.out.println("Ingen varer/service med navnet: "+ navn + "blev fundet");
+            System.out.println("Ingen varer/service med navnet: "+ navn + " blev fundet");
         }
     }
 

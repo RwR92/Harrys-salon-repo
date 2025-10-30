@@ -110,8 +110,8 @@ public class Menuer { //UI Klasse
         nummer = gyldigtNummer(nummer);
 
         System.out.print("Total pris: ");
-        double totalPrice = scn.nextDouble();
-        scn.nextLine();
+        String totalPrice = scn.nextLine();
+        double totalPriceD = gyldigPrisForDouble(totalPrice);
 
         Kunde kunde = new Kunde(navn, nummer);
 
@@ -125,7 +125,7 @@ public class Menuer { //UI Klasse
         //bruger checkDayOfWeek til at bestemme om det er lukkedag
         boolean itIsWeekend = ClosingDays.checkDayOfWeek(dato);
         if (itIsWeekend)
-            return;
+            return; //Hopper ud af nuværende loop.
 
         //tjekker om det er helligdag
         boolean itIsHolyday = ClosingDays.checkHolyDays(dato);
@@ -153,7 +153,7 @@ public class Menuer { //UI Klasse
         int valgteTid2 = Integer.parseInt(valgteTid1);
         LocalTime tid = ledigeTider.get(valgteTid2 - 1);
 
-        kalender.tilfoejBooking(new Booking(kunde, dato, tid, totalPrice));
+        kalender.tilfoejBooking(new Booking(kunde, dato, tid, totalPriceD));
         System.out.println("Booking tilføjet for " + kunde.getNavn());
         økonomi.gemBooking();
         System.out.println("Bookinger gemt i fil!");
@@ -269,13 +269,22 @@ public class Menuer { //UI Klasse
         }
     } //gyldigDato metode
 
-    public String gyldigPris(String pris){
+    public String gyldigPrisForStrings(String pris){
         while(!pris.matches("\\d+")){
             System.out.println("Prisen kan kun indeholde tal.");
             System.out.print("Varen/servicens pris :");
             pris = scn.nextLine();
         }
         return pris;
+    }
+
+    public Double gyldigPrisForDouble(String prisIn){
+        while(!prisIn.matches("\\d+(\\.\\d+)?")){
+            System.out.println("Prisen kan kun indeholde tal.");
+            System.out.print("Varen/servicens pris :");
+            prisIn = scn.nextLine();
+        }
+        return Double.parseDouble(prisIn);
     }
 
     public void vareServiceHaandtering(){
@@ -299,7 +308,7 @@ public class Menuer { //UI Klasse
                     navn = gyldigtNavn(navn);
                     System.out.println("Varen/servicens pris:");
                     String prisTekst= scn.nextLine();
-                    prisTekst = gyldigPris(prisTekst);
+                    prisTekst = gyldigPrisForStrings(prisTekst);
                     double pris = Double.parseDouble(String.valueOf(prisTekst));
                     salg2.tilfoejVarer(new Salg.Vare(navn,pris));
                     System.out.println("Opdateret Vare/serviceliste:");
@@ -323,7 +332,7 @@ public class Menuer { //UI Klasse
                     navn = gyldigtNavn(navn);
                     System.out.println("Varen/servicens pris:");
                     prisTekst = scn.nextLine();
-                    prisTekst = gyldigPris(prisTekst);
+                    prisTekst = gyldigPrisForStrings(prisTekst);
                     pris = Double.parseDouble(String.valueOf(prisTekst));
                     salg2.tilfoejService(new Salg.Service(navn,pris));
                     System.out.println("Opdateret Vare/serviceliste:");
