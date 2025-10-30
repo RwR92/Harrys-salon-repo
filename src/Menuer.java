@@ -100,6 +100,50 @@ public class Menuer { //UI Klasse
         //Whileloop for valgBogfoering
     } //public void valgBogfoering
 
+    public void bookValg() {
+        while (start) {
+            System.out.println("Tast 1: Opret booking");
+            System.out.println("Tast 2: For at slette booking");
+            System.out.println("Tast 3: For at vise Bookinger for en bestemt dag");
+            System.out.println("Tast 4: For at gå til Startmenu");
+            System.out.println("Tast 5: For at gå til Bogføring");
+            System.out.println("Tast 6: Vis ledige tider 4 dage fra dato");
+
+            int valg = scn.nextInt();
+            scn.nextLine();
+
+
+            switch (valg) {
+                case 1:  //Opretter booking.
+                    opretBooking();
+                    break;
+
+                case 2:  //Slet booking.
+                    sletBooking();
+                    break;
+
+                case 3: // se bookinger for en bestemt dag.
+                    seBookingBestemtDag();
+                    break;
+
+                case 4: // Til hovede menuen.
+                    menuStart();
+                    break;
+
+                case 5: // Til Bogføring menuen.
+                    valgBogfoering();
+                    break;
+
+                case 6: // Printer 4 dage frem med de ledige tider.
+                    visLedigeTider4DageFrem();
+                    break;
+
+                default:
+                    System.out.println("ugyldigt input");
+            } //switch til bookvalg
+        } //while loop til bookvalg
+    } // public void bookValg
+
     public void opretBooking() {
         System.out.print("Kundens navn: ");
         String navn = scn.nextLine();
@@ -193,50 +237,6 @@ public class Menuer { //UI Klasse
         kalender.visLedigeTiderFor4Dage(d);
     } // VisLedigeTider4DageFrem metode
 
-    public void bookValg() {
-        while (start) {
-            System.out.println("Tast 1: Opret booking");
-            System.out.println("Tast 2: For at slette booking");
-            System.out.println("Tast 3: For at vise Bookinger for en bestemt dag");
-            System.out.println("Tast 4: For at gå til Startmenu");
-            System.out.println("Tast 5: For at gå til Bogføring");
-            System.out.println("Tast 6: Vis ledige tider 4 dage fra dato");
-
-            int valg = scn.nextInt();
-            scn.nextLine();
-
-
-            switch (valg) {
-                case 1:  //Opretter booking.
-                    opretBooking();
-                    break;
-
-                case 2:  //Slet booking.
-                    sletBooking();
-                    break;
-
-                case 3: // se bookinger for en bestemt dag.
-                    seBookingBestemtDag();
-                    break;
-
-                case 4: // Til hovede menuen.
-                    menuStart();
-                    break;
-
-                case 5: // Til Bogføring menuen.
-                    valgBogfoering();
-                    break;
-
-                case 6: // Printer 4 dage frem med de ledige tider.
-                    visLedigeTider4DageFrem();
-                    break;
-
-                default:
-                    System.out.println("ugyldigt input");
-            } //switch til bookvalg
-        } //while loop til bookvalg
-    } // public void bookValg
-
     public String gyldigtNummer(String nummer) {
         while (!nummer.matches("\\d{8}")) { //"\\d{8}" betyder at nummeret skal indeholde cifre fra 0-9 og være 8 lang.
             System.out.println("Nummeret skal være 8 cifre lang.");
@@ -279,6 +279,7 @@ public class Menuer { //UI Klasse
             System.out.println("Tast 4: for at tilføje services til systemet");
             System.out.println("Tast 5: for at fjerne Services fra systemet");
             System.out.println("Tast 6: for at vise services i Systemet");
+            System.out.println("Tast 7: gå tilbage til startmenu");
 
             int valg = scn.nextInt();
             scn.nextLine();
@@ -325,6 +326,8 @@ public class Menuer { //UI Klasse
                 case 6:
                     salg2.visService();
                     break;
+                case 7:
+                    return;
                 default:
                     System.out.println("Ugyldigt input");
             }

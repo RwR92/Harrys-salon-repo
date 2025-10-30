@@ -1,6 +1,7 @@
 
 import java.io.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -11,6 +12,8 @@ public class Salg {
     ArrayList<Service> valgtServices;
     static ArrayList<Vare> muligVarer = new ArrayList<>();
     static ArrayList<Service> muligServices = new ArrayList<>();
+    Scanner scn = new Scanner(System.in);
+
 
     static {
         muligServices.add(new Service("Herreklip", 200.0));
@@ -53,11 +56,12 @@ public class Salg {
 
     }
 
-    public void tilfoejVareTilBooking(Scanner scn, Kalender kalender, VirkØkonomi økonomi){
+    public void tilfoejVareTilBooking(Scanner scn, Kalender kalender, VirkØkonomi økonomi){ //opret kvittering
         System.out.println("Kundens navn:");
         String kundeNavn=scn.nextLine();
-        System.out.println("Dato for Booking yyyy-mm-dd");
-        LocalDate bookingDate = LocalDate.parse(scn.nextLine());
+        kundeNavn = gyldigtNavn(kundeNavn);
+
+        LocalDate bookingDate = gyldigDato();
 
         Booking booking= null;
         for(Booking b : kalender.hentAlleBookinger()) {
@@ -227,7 +231,7 @@ public class Salg {
     }
 
     public void gemAlleVarerTilFil() {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("src//Varer.txt"))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("src//Varer.txt",true))) {
             for (Vare v : valgtVarer) {
                 bw.write(" " + v.navn + ";" + v.pris);
                 bw.newLine();
@@ -238,7 +242,7 @@ public class Salg {
         }
     }
     public void gemAlleServicesTilFil() {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("src//Services.txt"))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("src//Services.txt",true))) {
 
             for (Service s : valgtServices) {
                 bw.write(" " + s.navn + ";" + s.pris);
@@ -284,4 +288,26 @@ public class Salg {
             System.out.println("Fejl ved indlæsning af Varer: " + e.getMessage());
         }
     }
+
+    public LocalDate gyldigDato() {
+        System.out.print("Dato? (yyyy-mm-dd): ");
+
+        while (true) {
+            try {
+                LocalDate dato = LocalDate.parse(scn.nextLine());
+                return dato;
+            } catch (DateTimeParseException e) {
+                System.out.print("Ugyldig dato, prøv igen (yyyy-mm-dd): ");
+
+            }
+
+        }
+    } //gyldigDato metode
+    public String gyldigtNavn(String navn) {
+        while (!navn.matches("[a-zA-ZæøåÆØÅ\\- ]+")) { //Tjek for om navnet indeholder danske bogstaver eller bindestreg og mellemrum og + for at sike mindst et tegn.
+            System.out.print("Ugyldigt navn, brug bogstaver: ");
+            navn = scn.nextLine();
+        }
+        return navn;
+    } // gyldigtNavn metode
 }
