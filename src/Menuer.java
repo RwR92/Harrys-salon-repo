@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
@@ -20,6 +21,7 @@ public class Menuer { //UI Klasse
     public void menuStart() {
 
         while (start) {
+            int valgTilSwitch;
             System.out.println("***Harry's frisør salon***");
             System.out.println("Tast 1: for bogføring");
             System.out.println("Tast 2: for booking");
@@ -27,10 +29,10 @@ public class Menuer { //UI Klasse
             System.out.println("Tast 4: for vare/service");
             System.out.println("Tast 5: for at oprette kvittering");
 
-            int valg = scn.nextInt();
-            scn.nextLine();
+            String valg = scn.nextLine();
+            valgTilSwitch = gyldigtValgTilMenuer(valg);
 
-            switch (valg) {
+            switch (valgTilSwitch) {
                 case 1:
                     valgBogfoering();  //metodekald til Bogførings menu
                     break;
@@ -66,17 +68,18 @@ public class Menuer { //UI Klasse
             }
         }
         while (start) {
+            int valgTilSwitch;
             System.out.println("Tast 1: udskriver specifik dato");
             System.out.println("Tast 2: udskriver alle kvitteringer");
             System.out.println("Tast 3: gå tilbage til startmenu");
             System.out.println("Tast 4: gå til Booking");
 
 
-            int valg = scn.nextInt();
-            scn.nextLine();
+            String valg = scn.nextLine();
+            valgTilSwitch = gyldigtValgTilMenuer(valg);
 
 
-            switch (valg) {
+            switch (valgTilSwitch) {
                 case 1:
                     System.out.println("udskriver specifik dato");
                     Salg.findDagKvittering();
@@ -195,6 +198,7 @@ public class Menuer { //UI Klasse
 
     public void bookValg() {
         while (start) {
+            int valgTilSwitch;
             System.out.println("Tast 1: Opret booking");
             System.out.println("Tast 2: For at slette booking");
             System.out.println("Tast 3: For at vise Bookinger for en bestemt dag");
@@ -202,11 +206,11 @@ public class Menuer { //UI Klasse
             System.out.println("Tast 5: For at gå til Bogføring");
             System.out.println("Tast 6: Vis ledige tider 4 dage fra dato");
 
-            int valg = scn.nextInt();
-            scn.nextLine();
+            String valg = scn.nextLine();
+            valgTilSwitch = gyldigtValgTilMenuer(valg);
 
 
-            switch (valg) {
+            switch (valgTilSwitch) {
                 case 1:  //Opretter booking.
                     opretBooking();
                     break;
@@ -246,6 +250,14 @@ public class Menuer { //UI Klasse
         return nummer;
     } // GyldigtNummer metode
 
+    public int gyldigtValgTilMenuer(String valgIn) {
+        while (!valgIn.matches("\\d+")) {
+            System.out.print("Ugyldigt valg. Brug et tal :");
+            valgIn = scn.nextLine();
+        }
+        return Integer.parseInt(valgIn.trim());
+    } //gyldigtValgTilMenuer metode
+
     public String gyldigtNavn(String navn) {
         while (!navn.matches("[a-zA-ZæøåÆØÅ\\- ]+")) { //Tjek for om navnet indeholder danske bogstaver eller bindestreg og mellemrum og + for at sike mindst et tegn.
             System.out.print("Ugyldigt navn, brug bogstaver: ");
@@ -269,8 +281,8 @@ public class Menuer { //UI Klasse
         }
     } //gyldigDato metode
 
-    public String gyldigPrisForStrings(String pris){
-        while(!pris.matches("\\d+")){
+    public String gyldigPrisForStrings(String pris) {
+        while (!pris.matches("\\d+")) {
             System.out.println("Prisen kan kun indeholde tal.");
             System.out.print("Varen/servicens pris :");
             pris = scn.nextLine();
@@ -278,8 +290,8 @@ public class Menuer { //UI Klasse
         return pris;
     } //gyldigPrisForStrings metode
 
-    public Double gyldigPrisForDouble(String prisIn){
-        while(!prisIn.matches("\\d+(\\.\\d+)?")){
+    public Double gyldigPrisForDouble(String prisIn) {
+        while (!prisIn.matches("\\d+(\\.\\d+)?")) {
             System.out.println("Prisen kan kun indeholde tal.");
             System.out.print("Varen/servicens pris :");
             prisIn = scn.nextLine();
@@ -287,10 +299,11 @@ public class Menuer { //UI Klasse
         return Double.parseDouble(prisIn);
     }//gyldigPrisForDouble
 
-    public void vareServiceHaandtering(){
-        Salg salg2=new Salg("ordrer", 0.0);
+    public void vareServiceHaandtering() {
+        Salg salg2 = new Salg("ordrer", 0.0);
 
         while (start) {
+            int valgTilSwitch;
             System.out.println("Tast 1: for at tilføje vare til systemet");
             System.out.println("Tast 2: for at fjerne vare fra systemet");
             System.out.println("Tast 3: for at se varerene i systemet");
@@ -298,10 +311,10 @@ public class Menuer { //UI Klasse
             System.out.println("Tast 5: for at fjerne Services fra systemet");
             System.out.println("Tast 6: for at vise services i Systemet");
 
-            int valg = scn.nextInt();
-            scn.nextLine();
+            String valg = scn.nextLine();
+            valgTilSwitch = gyldigtValgTilMenuer(valg);
 
-            switch (valg) {
+            switch (valgTilSwitch) {
                 case 1: //Tilføje vare
                     System.out.println("Varen/servicens navn:");
                     String navn = scn.nextLine();
