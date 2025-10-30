@@ -85,32 +85,4 @@ public class VirkØkonomi {
             System.out.println("\u001B[31mFejl ved udskrivning af booking!" + e.getMessage() + "\u001B[0m");
         }
     } //loadFraFil metode
-
-
-//    public static void main(String[] args) {
-//        Kalender kalender = new Kalender();
-//       VirkØkonomi økonomi = new VirkØkonomi(kalender);
-//
-//        Kunde kunde = new Kunde("Ava", "30222230");
-//        LocalDate dato = LocalDate.parse("2025-10-26");
-//        LocalTime time = LocalTime.parse("12:30");
-//        Booking b = new Booking(kunde, dato, time, 350);
-//
-//        LocalDate dato2 = LocalDate.parse("2025-12-12");
-//        økonomi.findBooking(dato2);
-//
-//        Kunde k2 = new Kunde("Jesper", "20202020");
-//        LocalDate dato3 = LocalDate.parse("2025-10-29");
-//        LocalTime time2 = LocalTime.parse("10:30");
-//        Booking b2 = new Booking(k2,dato3, time2, 450 );
-//        kalender.tilfoejBooking(b);
-//        kalender.tilfoejBooking(b2);
-//        økonomi.gemBooking();
-//
-//
-//    }
-
 }// coomit og oush main, booking klasse,
-
-//Arraylist datoer = loadAndSaveClass.loadHolyDays();
-// for(dato:datoer){if (booking.dato = dato) - annuler booking
