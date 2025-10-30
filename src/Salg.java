@@ -1,6 +1,7 @@
 
 import java.io.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -11,14 +12,9 @@ public class Salg {
     ArrayList<Service> valgtServices;
     static ArrayList<Vare> muligVarer = new ArrayList<>();
     static ArrayList<Service> muligServices = new ArrayList<>();
+    Scanner scn = new Scanner(System.in);
 
-    static {
-        muligServices.add(new Service("Herreklip", 200.0));
-        muligServices.add(new Service("Dameklip", 400.0));
-        muligVarer.add(new Vare("Shampoo", 150.0));
-        muligVarer.add(new Vare("Voks", 100.0));
-        muligVarer.add(new Vare("kam", 50.0));
-    }
+
     public static class Service{
         String navn;
         double pris;
@@ -53,11 +49,12 @@ public class Salg {
 
     }
 
-    public void tilfoejVareTilBooking(Scanner scn, Kalender kalender, VirkØkonomi økonomi){
+    public void tilfoejVareTilBooking(Scanner scn, Kalender kalender, VirkØkonomi økonomi){ //opret kvittering
         System.out.println("Kundens navn:");
         String kundeNavn=scn.nextLine();
-        System.out.println("Dato for Booking yyyy-mm-dd");
-        LocalDate bookingDate = LocalDate.parse(scn.nextLine());
+        kundeNavn = gyldigtNavn(kundeNavn);
+
+        LocalDate bookingDate = gyldigDato();
 
         Booking booking= null;
         for(Booking b : kalender.hentAlleBookinger()) {
@@ -103,7 +100,7 @@ public class Salg {
         System.out.println("Ny Totalt beløb: "+ booking.getTotalPrice()+"Kr,-");
         bogfoerSalg(booking,salg);
         økonomi.gemBooking();
-    } //også brugt til service
+    } //også brugt til service kobler en existerende booking med vare/service
 
     public void fjernService(String navn){
         Salg.loadServicesFraFil();
@@ -118,7 +115,7 @@ public class Salg {
                 break;
             }
         }
-    }
+    } // fjern services fra arraylist som txt-fil bliver læst fra
     public void fjernVarer(String navn){
         Salg.loadServicesFraFil();
         Salg.loadVareFraFil();
@@ -135,18 +132,18 @@ public class Salg {
         if(!fundet){
             System.out.println("Ingen varer/service med navnet: "+ navn + " blev fundet");
         }
-    }
+    } //fjern vare fra arraylist som txt-fil bliver læst fra
 
     public void tilfoejService(Service service){
         valgtServices.add(service);
         this.pris += service.pris;
         gemAlleServicesTilFil();
-    }
+    } //tilføj service til arraylist som txt-fil bliver læst fra
     public void tilfoejVarer(Vare vare){
         valgtVarer.add(vare);
         this.pris += vare.pris;
         gemAlleVarerTilFil();
-    }
+    } //tilføj vare til arraylist som txt-fil bliver læst fra
 
     public void visVarer(){
         Salg.loadServicesFraFil();
@@ -155,7 +152,7 @@ public class Salg {
             Vare v = muligVarer.get(i);
             System.out.println((i+1) +" "+ v.navn+" - "+ v.pris+"Kr,-");
         }
-    }
+    } //viser varer der er i arraylist, men læser først fil ind i arraylist
     public void visService(){
         Salg.loadServicesFraFil();
         Salg.loadVareFraFil();
@@ -163,7 +160,7 @@ public class Salg {
             Service s = muligServices.get(i);
             System.out.println((muligVarer.size()+i+1)+" "+s.navn+" - "+ s.pris+"Kr,-");
         }
-    }
+    }//viser service der er i arraylist, men læser først fil ind i arraylist
 
     private void bogfoerSalg(Booking booking, Salg salg){
         try(BufferedWriter bw = new BufferedWriter(new FileWriter("src//Bogføring.txt",true))){
@@ -189,7 +186,7 @@ public class Salg {
             System.out.println("Fejl ved bogføring" + e.getMessage());
 
         }
-    }
+    } //skriver booking objektet med tilføjede vare/service ind i en txt-fil
     public static void visKvitteringerFraFil() {
         try (BufferedReader br = new BufferedReader(new FileReader("src//Bogføring.txt"))) {
             String linje;
@@ -199,7 +196,7 @@ public class Salg {
         } catch (IOException e) {
             System.out.println("Fejl ved læsning af kvitteringsfil: " + e.getMessage());
         }
-    }
+    } //viser alle objekter med tilhørende variabler fra bogføring
     public static  void findDagKvittering(){
         Scanner scn = new Scanner(System.in);
         System.out.println("Dato for Booking yyyy-mm-dd");
@@ -215,7 +212,8 @@ public class Salg {
                 }
             }
             if(!fundet){
-                System.out.println("inden kvitteringer på: "+ soegedato);
+                System.out.println("ingen kvitteringer på: "+ soegedato);
+                System.out.println("");
             }
         }catch (IOException e){
             System.out.println("fejl ved læsning" + e.getMessage());
@@ -224,10 +222,10 @@ public class Salg {
         Booking booking = null;
 
 
-    }
+    } //viser alle objekter for en specifik dag med tilhørende variabler fra bogføring
 
     public void gemAlleVarerTilFil() {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("src//Varer.txt"))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("src//Varer.txt",true))) {
             for (Vare v : valgtVarer) {
                 bw.write(" " + v.navn + ";" + v.pris);
                 bw.newLine();
@@ -236,9 +234,9 @@ public class Salg {
         } catch (IOException e) {
             System.out.println("Fejl ved gemning: " + e.getMessage());
         }
-    }
+    }//gemmer nye vare bruger tilføjer til txt-fil
     public void gemAlleServicesTilFil() {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("src//Services.txt"))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("src//Services.txt",true))) {
 
             for (Service s : valgtServices) {
                 bw.write(" " + s.navn + ";" + s.pris);
@@ -248,7 +246,7 @@ public class Salg {
         } catch (IOException e) {
             System.out.println("Fejl ved gemning: " + e.getMessage());
         }
-    }
+    }//gemmer nye vare bruger tilføjer til txt-fil
 
     public static void loadServicesFraFil() {
         muligServices.clear();
@@ -266,7 +264,7 @@ public class Salg {
         } catch (IOException e) {
             System.out.println("Fejl ved indlæsning af services: " + e.getMessage());
         }
-    }
+    } //læser services fra txt-fil til arraylist
     public static void loadVareFraFil() {
         muligVarer.clear();
         try (BufferedReader br = new BufferedReader(new FileReader("src//Varer.txt"))) {
@@ -283,5 +281,35 @@ public class Salg {
         } catch (IOException e) {
             System.out.println("Fejl ved indlæsning af Varer: " + e.getMessage());
         }
-    }
+    } //læser varer fra txt-fil til arraylist
+
+    public LocalDate gyldigDato() {
+        System.out.print("Dato? (yyyy-mm-dd): ");
+
+        while (true) {
+            try {
+                LocalDate dato = LocalDate.parse(scn.nextLine());
+                return dato;
+            } catch (DateTimeParseException e) {
+                System.out.print("Ugyldig dato, prøv igen (yyyy-mm-dd): ");
+
+            }
+
+        }
+    } //gyldigDato metode
+    public String gyldigtNavn(String navn) {
+        while (!navn.matches("[a-zA-ZæøåÆØÅ\\- ]+")) { //Tjek for om navnet indeholder danske bogstaver eller bindestreg og mellemrum og + for at sike mindst et tegn.
+            System.out.print("Ugyldigt navn, brug bogstaver: ");
+            navn = scn.nextLine();
+        }
+        return navn;
+    } // gyldigtNavn metode
+    public Double gyldigPrisForDouble(String prisIn){
+        while(!prisIn.matches("\\d+(\\.\\d+)?")){
+            System.out.println("Prisen kan kun indeholde tal.");
+            System.out.print("Varen/servicens pris :");
+            prisIn = scn.nextLine();
+        }
+        return Double.parseDouble(prisIn);
+    }//gyldigPrisForDouble
 }

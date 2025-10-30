@@ -1,4 +1,6 @@
-import java.text.DecimalFormat;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
@@ -21,7 +23,6 @@ public class Menuer { //UI Klasse
     public void menuStart() {
 
         while (start) {
-            int valgTilSwitch;
             System.out.println("***Harry's frisør salon***");
             System.out.println("Tast 1: for bogføring");
             System.out.println("Tast 2: for booking");
@@ -29,10 +30,10 @@ public class Menuer { //UI Klasse
             System.out.println("Tast 4: for vare/service");
             System.out.println("Tast 5: for at oprette kvittering");
 
-            String valg = scn.nextLine();
-            valgTilSwitch = gyldigtValgTilMenuer(valg);
+            int valg = scn.nextInt();
+            scn.nextLine();
 
-            switch (valgTilSwitch) {
+            switch (valg) {
                 case 1:
                     valgBogfoering();  //metodekald til Bogførings menu
                     break;
@@ -66,41 +67,90 @@ public class Menuer { //UI Klasse
                 System.out.println("Du er logget ind");
                 keepGoing = false;
             }
-        }
+
+            while (start) {
+                System.out.println("Tast 1: udskriver specifik dato");
+                System.out.println("Tast 2: udskriver alle kvitteringer");
+                System.out.println("Tast 3: gå tilbage til startmenu");
+                System.out.println("Tast 4: gå til Booking");
+
+
+                int valg = scn.nextInt();
+                scn.nextLine();
+
+
+                switch (valg) {
+                    case 1:
+                        System.out.println("udskriver specifik dato");
+                        Salg.findDagKvittering();
+                        break;
+                    case 2:
+                        System.out.println("Udskriver alle kvitteringer");
+                        Salg.visKvitteringerFraFil();
+                        break;
+                    case 3:
+                        System.out.println("Gå tilbage til startmenu");
+                        menuStart();  //metodekald til startmenu
+                    case 4:
+                        bookValg();
+                        break;
+                    case 5:
+
+                    default:
+                        System.out.println("Ugyldigt input");
+                } //switch with valgBogfoering
+            } //Whileloop for valgBogfoering
+        } //public void valgBogfoering
+    } //menu for bogføring.
+
+    public void bookValg() {
         while (start) {
-            int valgTilSwitch;
-            System.out.println("Tast 1: udskriver specifik dato");
-            System.out.println("Tast 2: udskriver alle kvitteringer");
-            System.out.println("Tast 3: gå tilbage til startmenu");
-            System.out.println("Tast 4: gå til Booking");
+            System.out.println("Tast 1: Opret booking");
+            System.out.println("Tast 2: For at slette booking");
+            System.out.println("Tast 3: For at vise Bookinger for en bestemt dag(kun bagud)");
+            System.out.println("Tast 4: for at se Bookinger, Kun for en bestemt dag");
+            System.out.println("Tast 5: For at gå til Startmenu");
+            System.out.println("Tast 6: For at gå til Bogføring");
+            System.out.println("Tast 7: Vis ledige tider 4 dage fra dato");
+
+            int valg = scn.nextInt();
+            scn.nextLine();
 
 
-            String valg = scn.nextLine();
-            valgTilSwitch = gyldigtValgTilMenuer(valg);
-
-
-            switch (valgTilSwitch) {
-                case 1:
-                    System.out.println("udskriver specifik dato");
-                    Salg.findDagKvittering();
+            switch (valg) {
+                case 1:  //Opretter booking.
+                    opretBooking();
                     break;
-                case 2:
-                    System.out.println("Udskriver alle kvitteringer");
-                    Salg.visKvitteringerFraFil();
+
+                case 2:  //Slet booking.
+                    sletBooking();
                     break;
-                case 3:
-                    System.out.println("Gå tilbage til startmenu");
-                    menuStart();  //metodekald til startmenu
-                case 4:
-                    bookValg();
+
+                case 3: // se bookinger for en bestemt dag. (kun bagud)
+                    seBookingBestemtDag();
                     break;
-                case 5:
+
+                case 4: //se bookinger på hvilken som helst dag
+                    findDagBooking();
+                    break;
+
+                case 5: // Til hovede menuen.
+                    menuStart();
+                    break;
+
+                case 6: // Til Bogføring menuen.
+                    valgBogfoering();
+                    break;
+
+                case 7: // Printer 4 dage frem med de ledige tider.
+                    visLedigeTider4DageFrem();
+                    break;
 
                 default:
-                    System.out.println("Ugyldigt input");
-            } //switch with valgBogfoering
-        } //Whileloop for valgBogfoering
-    } //public void valgBogfoering
+                    System.out.println("ugyldigt input");
+            } //switch til bookvalg
+        } //while loop til bookvalg
+    } // public void bookValg
 
     public void opretBooking() {
         System.out.print("Kundens navn: ");
@@ -111,9 +161,7 @@ public class Menuer { //UI Klasse
         String nummer = scn.nextLine();
         nummer = gyldigtNummer(nummer);
 
-        System.out.print("Total pris: ");
-        String totalPrice = scn.nextLine();
-        double totalPriceD = gyldigPrisForDouble(totalPrice);
+        double totalPrice = 0;
 
         Kunde kunde = new Kunde(navn, nummer);
 
@@ -155,7 +203,7 @@ public class Menuer { //UI Klasse
         int valgteTid2 = Integer.parseInt(valgteTid1);
         LocalTime tid = ledigeTider.get(valgteTid2 - 1);
 
-        kalender.tilfoejBooking(new Booking(kunde, dato, tid, totalPriceD));
+        kalender.tilfoejBooking(new Booking(kunde, dato, tid, totalPrice));
         System.out.println("Booking tilføjet for " + kunde.getNavn());
         økonomi.gemBooking();
         System.out.println("Bookinger gemt i fil!");
@@ -186,60 +234,39 @@ public class Menuer { //UI Klasse
         LocalDate dateToday = LocalDate.now();
         if (datoSøg.isBefore(dateToday)) {
             økonomi.findBooking(datoSøg.toString());
-        } else
-            System.out.println("\u001B[38;2;255;193;7mHer kan du kun se bookinger fra dagen før dags dato!\u001B[0m");
-    } //Se bookinger for en bestemt dag.
+        } else System.out.println("\u001B[38;2;255;193;7mHer kan du kun se bookinger fra dagen før dags dato!\u001B[0m");
+    }      //Se bookinger for en bestemt dag. men kun bagud
+
+    public static  void findDagBooking() {
+        Scanner scn = new Scanner(System.in);
+        System.out.println("Dato for Booking yyyy-mm-dd");
+        String soegedato = scn.nextLine();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("src//ListeBookinger.txt"))) {
+            boolean fundet = false;
+            String linje;
+            while ((linje = br.readLine()) != null) {
+                if (linje.startsWith(soegedato)) {
+                    System.out.println(linje);
+                    fundet = true;
+                }
+            }
+            if (!fundet) {
+                System.out.println("ingen Bookinger på: " + soegedato);
+                System.out.println("");
+            }
+        } catch (IOException e) {
+            System.out.println("fejl ved læsning" + e.getMessage());
+        }
+
+        Booking booking = null;
+    } //find booking for hvilken som helst dag. og kun specifikke dag
 
     public void visLedigeTider4DageFrem() {
         System.out.print("Dato? (yyyy-mm-dd): ");
         LocalDate d = gyldigDato();
         kalender.visLedigeTiderFor4Dage(d);
     } // VisLedigeTider4DageFrem metode
-
-    public void bookValg() {
-        while (start) {
-            int valgTilSwitch;
-            System.out.println("Tast 1: Opret booking");
-            System.out.println("Tast 2: For at slette booking");
-            System.out.println("Tast 3: For at vise Bookinger for en bestemt dag");
-            System.out.println("Tast 4: For at gå til Startmenu");
-            System.out.println("Tast 5: For at gå til Bogføring");
-            System.out.println("Tast 6: Vis ledige tider 4 dage fra dato");
-
-            String valg = scn.nextLine();
-            valgTilSwitch = gyldigtValgTilMenuer(valg);
-
-
-            switch (valgTilSwitch) {
-                case 1:  //Opretter booking.
-                    opretBooking();
-                    break;
-
-                case 2:  //Slet booking.
-                    sletBooking();
-                    break;
-
-                case 3: // se bookinger for en bestemt dag.
-                    seBookingBestemtDag();
-                    break;
-
-                case 4: // Til hovede menuen.
-                    menuStart();
-                    break;
-
-                case 5: // Til Bogføring menuen.
-                    valgBogfoering();
-                    break;
-
-                case 6: // Printer 4 dage frem med de ledige tider.
-                    visLedigeTider4DageFrem();
-                    break;
-
-                default:
-                    System.out.println("ugyldigt input");
-            } //switch til bookvalg
-        } //while loop til bookvalg
-    } // public void bookValg
 
     public String gyldigtNummer(String nummer) {
         while (!nummer.matches("\\d{8}")) { //"\\d{8}" betyder at nummeret skal indeholde cifre fra 0-9 og være 8 lang.
@@ -249,14 +276,6 @@ public class Menuer { //UI Klasse
         }
         return nummer;
     } // GyldigtNummer metode
-
-    public int gyldigtValgTilMenuer(String valgIn) {
-        while (!valgIn.matches("\\d+")) {
-            System.out.print("Ugyldigt valg. Brug et tal :");
-            valgIn = scn.nextLine();
-        }
-        return Integer.parseInt(valgIn.trim());
-    } //gyldigtValgTilMenuer metode
 
     public String gyldigtNavn(String navn) {
         while (!navn.matches("[a-zA-ZæøåÆØÅ\\- ]+")) { //Tjek for om navnet indeholder danske bogstaver eller bindestreg og mellemrum og + for at sike mindst et tegn.
@@ -281,8 +300,8 @@ public class Menuer { //UI Klasse
         }
     } //gyldigDato metode
 
-    public String gyldigPrisForStrings(String pris) {
-        while (!pris.matches("\\d+")) {
+    public String gyldigPrisForStrings(String pris){
+        while(!pris.matches("\\d+")){
             System.out.println("Prisen kan kun indeholde tal.");
             System.out.print("Varen/servicens pris :");
             pris = scn.nextLine();
@@ -290,8 +309,8 @@ public class Menuer { //UI Klasse
         return pris;
     } //gyldigPrisForStrings metode
 
-    public Double gyldigPrisForDouble(String prisIn) {
-        while (!prisIn.matches("\\d+(\\.\\d+)?")) {
+    public Double gyldigPrisForDouble(String prisIn){
+        while(!prisIn.matches("\\d+(\\.\\d+)?")){
             System.out.println("Prisen kan kun indeholde tal.");
             System.out.print("Varen/servicens pris :");
             prisIn = scn.nextLine();
@@ -299,22 +318,22 @@ public class Menuer { //UI Klasse
         return Double.parseDouble(prisIn);
     }//gyldigPrisForDouble
 
-    public void vareServiceHaandtering() {
-        Salg salg2 = new Salg("ordrer", 0.0);
+    public void vareServiceHaandtering(){
+        Salg salg2=new Salg("ordrer", 0.0);
 
         while (start) {
-            int valgTilSwitch;
             System.out.println("Tast 1: for at tilføje vare til systemet");
             System.out.println("Tast 2: for at fjerne vare fra systemet");
             System.out.println("Tast 3: for at se varerene i systemet");
             System.out.println("Tast 4: for at tilføje services til systemet");
             System.out.println("Tast 5: for at fjerne Services fra systemet");
             System.out.println("Tast 6: for at vise services i Systemet");
+            System.out.println("Tast 7: gå tilbage til startmenu");
 
-            String valg = scn.nextLine();
-            valgTilSwitch = gyldigtValgTilMenuer(valg);
+            int valg = scn.nextInt();
+            scn.nextLine();
 
-            switch (valgTilSwitch) {
+            switch (valg) {
                 case 1: //Tilføje vare
                     System.out.println("Varen/servicens navn:");
                     String navn = scn.nextLine();
@@ -362,9 +381,12 @@ public class Menuer { //UI Klasse
                 case 6: //Vise services
                     salg2.visService();
                     break;
+                case 7:
+                    return;
                 default:
                     System.out.println("Ugyldigt input");
             }
         }
-    }//Vi håndtere skabelsen af nye ydelser huehuhe
-}// Menuer class
+    }//Vi håndtere skabelsen af nye ydelser huehuehue
+} // Menuer class
+
