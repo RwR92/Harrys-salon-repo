@@ -23,6 +23,7 @@ public class Menuer { //UI Klasse
     public void menuStart() {
 
         while (start) {
+            int switchValg;
             System.out.println("***Harry's frisør salon***");
             System.out.println("Tast 1: for bogføring");
             System.out.println("Tast 2: for booking");
@@ -30,10 +31,10 @@ public class Menuer { //UI Klasse
             System.out.println("Tast 4: for vare/service");
             System.out.println("Tast 5: for at oprette kvittering");
 
-            int valg = scn.nextInt();
-            scn.nextLine();
+            String valg = scn.nextLine();
+            switchValg = gyldigtValgTilMenuer(valg);
 
-            switch (valg) {
+            switch (switchValg) {
                 case 1:
                     valgBogfoering();  //metodekald til Bogførings menu
                     break;
@@ -69,17 +70,18 @@ public class Menuer { //UI Klasse
             }
 
             while (start) {
+                int switchValg;
                 System.out.println("Tast 1: udskriver specifik dato");
                 System.out.println("Tast 2: udskriver alle kvitteringer");
                 System.out.println("Tast 3: gå tilbage til startmenu");
                 System.out.println("Tast 4: gå til Booking");
 
 
-                int valg = scn.nextInt();
-                scn.nextLine();
+                String valg = scn.nextLine();
+                switchValg = gyldigtValgTilMenuer(valg);
 
 
-                switch (valg) {
+                switch (switchValg) {
                     case 1:
                         System.out.println("udskriver specifik dato");
                         Salg.findDagKvittering();
@@ -105,6 +107,7 @@ public class Menuer { //UI Klasse
 
     public void bookValg() {
         while (start) {
+            int switchValg;
             System.out.println("Tast 1: Opret booking");
             System.out.println("Tast 2: For at slette booking");
             System.out.println("Tast 3: For at vise Bookinger for en bestemt dag(kun bagud)");
@@ -113,11 +116,11 @@ public class Menuer { //UI Klasse
             System.out.println("Tast 6: For at gå til Bogføring");
             System.out.println("Tast 7: Vis ledige tider 4 dage fra dato");
 
-            int valg = scn.nextInt();
-            scn.nextLine();
+            String valg = scn.nextLine();
+            switchValg = gyldigtValgTilMenuer(valg);
 
 
-            switch (valg) {
+            switch (switchValg) {
                 case 1:  //Opretter booking.
                     opretBooking();
                     break;
@@ -268,6 +271,14 @@ public class Menuer { //UI Klasse
         kalender.visLedigeTiderFor4Dage(d);
     } // VisLedigeTider4DageFrem metode
 
+    public int gyldigtValgTilMenuer(String valgIn) {
+        while (!valgIn.matches("\\d+")) {
+            System.out.print("Ugyldigt valg. Brug et tal :");
+            valgIn = scn.nextLine();
+        }
+        return Integer.parseInt(valgIn.trim());
+    } //gyldigtValgTilMenuer metode
+
     public String gyldigtNummer(String nummer) {
         while (!nummer.matches("\\d{8}")) { //"\\d{8}" betyder at nummeret skal indeholde cifre fra 0-9 og være 8 lang.
             System.out.println("Nummeret skal være 8 cifre lang.");
@@ -322,6 +333,7 @@ public class Menuer { //UI Klasse
         Salg salg2=new Salg("ordrer", 0.0);
 
         while (start) {
+            int switchValg;
             System.out.println("Tast 1: for at tilføje vare til systemet");
             System.out.println("Tast 2: for at fjerne vare fra systemet");
             System.out.println("Tast 3: for at se varerene i systemet");
@@ -330,10 +342,10 @@ public class Menuer { //UI Klasse
             System.out.println("Tast 6: for at vise services i Systemet");
             System.out.println("Tast 7: gå tilbage til startmenu");
 
-            int valg = scn.nextInt();
-            scn.nextLine();
+            String valg = scn.nextLine();
+            switchValg = gyldigtValgTilMenuer(valg);
 
-            switch (valg) {
+            switch (switchValg) {
                 case 1: //Tilføje vare
                     System.out.println("Varen/servicens navn:");
                     String navn = scn.nextLine();
