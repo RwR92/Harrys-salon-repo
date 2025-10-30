@@ -95,11 +95,9 @@ public class Menuer { //UI Klasse
 
                 default:
                     System.out.println("Ugyldigt input");
-            }//switch with valgBogfoering
-        }
-    }
-    //Whileloop for valgBogfoering
-//public void valgBogfoering
+            } //switch with valgBogfoering
+        } //Whileloop for valgBogfoering
+    } //public void valgBogfoering
 
     public void opretBooking() {
         System.out.print("Kundens navn: ");
@@ -187,7 +185,7 @@ public class Menuer { //UI Klasse
             økonomi.findBooking(datoSøg.toString());
         } else
             System.out.println("\u001B[38;2;255;193;7mHer kan du kun se bookinger fra dagen før dags dato!\u001B[0m");
-    }      //Se bookinger for en bestemt dag.
+    } //Se bookinger for en bestemt dag.
 
     public void visLedigeTider4DageFrem() {
         System.out.print("Dato? (yyyy-mm-dd): ");
@@ -278,7 +276,7 @@ public class Menuer { //UI Klasse
             pris = scn.nextLine();
         }
         return pris;
-    }
+    } //gyldigPrisForStrings metode
 
     public Double gyldigPrisForDouble(String prisIn){
         while(!prisIn.matches("\\d+(\\.\\d+)?")){
@@ -287,7 +285,7 @@ public class Menuer { //UI Klasse
             prisIn = scn.nextLine();
         }
         return Double.parseDouble(prisIn);
-    }
+    }//gyldigPrisForDouble
 
     public void vareServiceHaandtering(){
         Salg salg2=new Salg("ordrer", 0.0);
