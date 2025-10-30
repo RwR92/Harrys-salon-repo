@@ -199,7 +199,6 @@ public class Salg {
     } //viser alle objekter med tilhørende variabler fra bogføring
     public static  void findDagKvittering(){
         Scanner scn = new Scanner(System.in);
-        System.out.println("Dato for Booking yyyy-mm-dd");
         String soegedato = String.valueOf(SystemUtility.gyldigDato(scn));
 
         try(BufferedReader br = new BufferedReader(new FileReader("src//Bogføring.txt"))){

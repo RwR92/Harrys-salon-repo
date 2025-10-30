@@ -32,7 +32,7 @@ public class SystemUtility {
     } // gyldigtNavn metode
 
     public static LocalDate gyldigDato(java.util.Scanner scn) {
-        System.out.print("Dato? (yyyy-mm-dd): ");
+        System.out.print("Dato (yyyy-mm-dd): ");
 
         while (true) {
             try {
