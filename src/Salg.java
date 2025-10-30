@@ -304,4 +304,12 @@ public class Salg {
         }
         return navn;
     } // gyldigtNavn metode
+    public Double gyldigPrisForDouble(String prisIn){
+        while(!prisIn.matches("\\d+(\\.\\d+)?")){
+            System.out.println("Prisen kan kun indeholde tal.");
+            System.out.print("Varen/servicens pris :");
+            prisIn = scn.nextLine();
+        }
+        return Double.parseDouble(prisIn);
+    }//gyldigPrisForDouble
 }

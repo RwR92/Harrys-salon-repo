@@ -68,39 +68,40 @@ public class Menuer { //UI Klasse
                 keepGoing = false;
             }
 
-        while (start) {
-            System.out.println("Tast 1: udskriver specifik dato");
-            System.out.println("Tast 2: udskriver alle kvitteringer");
-            System.out.println("Tast 3: gå tilbage til startmenu");
-            System.out.println("Tast 4: gå til Booking");
+            while (start) {
+                System.out.println("Tast 1: udskriver specifik dato");
+                System.out.println("Tast 2: udskriver alle kvitteringer");
+                System.out.println("Tast 3: gå tilbage til startmenu");
+                System.out.println("Tast 4: gå til Booking");
 
 
-            int valg = scn.nextInt();
-            scn.nextLine();
+                int valg = scn.nextInt();
+                scn.nextLine();
 
 
-            switch (valg) {
-                case 1:
-                    System.out.println("udskriver specifik dato");
-                    Salg.findDagKvittering();
-                    break;
-                case 2:
-                    System.out.println("Udskriver alle kvitteringer");
-                    Salg.visKvitteringerFraFil();
-                    break;
-                case 3:
-                    System.out.println("Gå tilbage til startmenu");
-                    menuStart();  //metodekald til startmenu
-                case 4:
-                    bookValg();
-                    break;
-                case 5:
+                switch (valg) {
+                    case 1:
+                        System.out.println("udskriver specifik dato");
+                        Salg.findDagKvittering();
+                        break;
+                    case 2:
+                        System.out.println("Udskriver alle kvitteringer");
+                        Salg.visKvitteringerFraFil();
+                        break;
+                    case 3:
+                        System.out.println("Gå tilbage til startmenu");
+                        menuStart();  //metodekald til startmenu
+                    case 4:
+                        bookValg();
+                        break;
+                    case 5:
 
-                default:
-                    System.out.println("Ugyldigt input");
-            } //switch with valgBogfoering
-        } //Whileloop for valgBogfoering
-    } //public void valgBogfoering
+                    default:
+                        System.out.println("Ugyldigt input");
+                } //switch with valgBogfoering
+            } //Whileloop for valgBogfoering
+        } //public void valgBogfoering
+    } //menu for bogføring.
 
     public void bookValg() {
         while (start) {
@@ -233,9 +234,6 @@ public class Menuer { //UI Klasse
         LocalDate dateToday = LocalDate.now();
         if (datoSøg.isBefore(dateToday)) {
             økonomi.findBooking(datoSøg.toString());
-        } else
-            System.out.println("\u001B[38;2;255;193;7mHer kan du kun se bookinger fra dagen før dags dato!\u001B[0m");
-    } //Se bookinger for en bestemt dag.
         } else System.out.println("\u001B[38;2;255;193;7mHer kan du kun se bookinger fra dagen før dags dato!\u001B[0m");
     }      //Se bookinger for en bestemt dag. men kun bagud
 
@@ -262,9 +260,9 @@ public class Menuer { //UI Klasse
         }
 
         Booking booking = null;
-    }
+    } //find booking for hvilken som helst dag. og kun specifikke dag
 
-        public void visLedigeTider4DageFrem() {
+    public void visLedigeTider4DageFrem() {
         System.out.print("Dato? (yyyy-mm-dd): ");
         LocalDate d = gyldigDato();
         kalender.visLedigeTiderFor4Dage(d);
@@ -389,5 +387,6 @@ public class Menuer { //UI Klasse
                     System.out.println("Ugyldigt input");
             }
         }
-    }//Vi håndtere skabelsen af nye ydelser huehuhe
-}// Menuer class
+    }//Vi håndtere skabelsen af nye ydelser huehuehue
+} // Menuer class
+
