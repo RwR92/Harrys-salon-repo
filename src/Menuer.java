@@ -27,9 +27,10 @@ public class Menuer { //UI Klasse
             System.out.println("***Harry's frisør salon***");
             System.out.println("Tast 1: for bogføring");
             System.out.println("Tast 2: for booking");
-            System.out.println("Tast 3: for at afslutte");
-            System.out.println("Tast 4: for vare/service");
-            System.out.println("Tast 5: for at oprette kvittering");
+            System.out.println("Tast 3: for at oprette kvittering");
+            System.out.println("Tast 4: for at afslutte");
+            System.out.println("Tast 5: for vare/service");
+
 
             String valg = scn.nextLine();
             switchValg = SystemUtility.gyldigtValgTilMenuer(valg,scn);
@@ -41,14 +42,14 @@ public class Menuer { //UI Klasse
                 case 2:
                     bookValg(); //metodekald til Booking menu
                     break;
-                case 3:
+                case 4:
                     System.out.println("\nprogram lukker");
                     start = false;
                     break;
-                case 4:
+                case 5:
                     vareServiceHaandtering();
                     break;
-                case 5:
+                case 3:
                     Salg salg = new Salg("order", 0.0);
                     salg.tilfoejVareTilBooking(scn, kalender, økonomi);
                     break;
