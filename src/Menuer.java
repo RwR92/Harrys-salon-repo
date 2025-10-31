@@ -67,6 +67,7 @@ public class Menuer { //UI Klasse
                 System.out.println("Du er logget ind");
                 keepGoing = false;
             }
+        }
 
             while (start) {
                 System.out.println("Tast 1: udskriver specifik dato");
@@ -101,7 +102,7 @@ public class Menuer { //UI Klasse
                 } //switch with valgBogfoering
             } //Whileloop for valgBogfoering
         } //public void valgBogfoering
-    } //menu for bogføring.
+     //menu for bogføring.
 
     public void bookValg() {
         while (start) {
@@ -388,5 +389,6 @@ public class Menuer { //UI Klasse
             }
         }
     }//Vi håndtere skabelsen af nye ydelser huehuehue
-} // Menuer class
+}
+// Menuer class
 
