@@ -1,6 +1,6 @@
 public class Kunde {
-    private String navn;
-    private String telefon;
+    private final String navn;
+    private final String telefon;
 
     public Kunde(String navn, String telefon) {
         this.navn = navn;

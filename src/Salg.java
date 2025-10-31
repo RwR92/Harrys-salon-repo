@@ -72,7 +72,7 @@ public class Salg {
         Salg salg = new Salg("salg",0.0);
         boolean tilfoejvare=true;
 
-        while(tilfoejvare==true){ //tilføj vare til Arraylist
+        while(tilfoejvare){ //tilføj vare til Arraylist
             System.out.println("Tilgængelige varer og services: ");
             visVarer();
             visService();
@@ -212,14 +212,11 @@ public class Salg {
             }
             if(!fundet){
                 System.out.println("ingen kvitteringer på: "+ soegedato);
-                System.out.println("");
+                System.out.println();
             }
         }catch (IOException e){
             System.out.println("fejl ved læsning" + e.getMessage());
         }
-
-        Booking booking = null;
-
 
     } //viser alle objekter for en specifik dag med tilhørende variabler fra bogføring
 

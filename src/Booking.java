@@ -2,9 +2,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Booking {
-    private LocalDate dato;
-    private LocalTime tid;
-    private Kunde kunde;
+    private final LocalDate dato;
+    private final LocalTime tid;
+    private final Kunde kunde;
     private double totalPrice;
 
     Booking(Kunde kunde, LocalDate dato, LocalTime tid, double totalPrice) {

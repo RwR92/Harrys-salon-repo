@@ -139,7 +139,7 @@ public class Menuer { //UI Klasse
                     findDagBooking();
                     break;
 
-                case 5: // Til hovede menuen.
+                case 5: // Til hoved menuen.
                     menuStart();
                     break;
 
