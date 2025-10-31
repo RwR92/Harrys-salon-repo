@@ -52,9 +52,9 @@ public class Salg {
     public void tilfoejVareTilBooking(Scanner scn, Kalender kalender, VirkØkonomi økonomi){ //opret kvittering
         System.out.println("Kundens navn:");
         String kundeNavn=scn.nextLine();
-        kundeNavn = gyldigtNavn(kundeNavn);
+        kundeNavn = SystemUtility.gyldigtNavn(kundeNavn,scn);
 
-        LocalDate bookingDate = gyldigDato();
+        LocalDate bookingDate = SystemUtility.gyldigDato(scn);
 
         Booking booking= null;
         for(Booking b : kalender.hentAlleBookinger()) {
@@ -199,8 +199,7 @@ public class Salg {
     } //viser alle objekter med tilhørende variabler fra bogføring
     public static  void findDagKvittering(){
         Scanner scn = new Scanner(System.in);
-        System.out.println("Dato for Booking yyyy-mm-dd");
-        String soegedato = scn.nextLine();
+        String soegedato = String.valueOf(SystemUtility.gyldigDato(scn));
 
         try(BufferedReader br = new BufferedReader(new FileReader("src//Bogføring.txt"))){
             boolean fundet=false;
@@ -283,33 +282,4 @@ public class Salg {
         }
     } //læser varer fra txt-fil til arraylist
 
-    public LocalDate gyldigDato() {
-        System.out.print("Dato? (yyyy-mm-dd): ");
-
-        while (true) {
-            try {
-                LocalDate dato = LocalDate.parse(scn.nextLine());
-                return dato;
-            } catch (DateTimeParseException e) {
-                System.out.print("Ugyldig dato, prøv igen (yyyy-mm-dd): ");
-
-            }
-
-        }
-    } //gyldigDato metode
-    public String gyldigtNavn(String navn) {
-        while (!navn.matches("[a-zA-ZæøåÆØÅ\\- ]+")) { //Tjek for om navnet indeholder danske bogstaver eller bindestreg og mellemrum og + for at sike mindst et tegn.
-            System.out.print("Ugyldigt navn, brug bogstaver: ");
-            navn = scn.nextLine();
-        }
-        return navn;
-    } // gyldigtNavn metode
-    public Double gyldigPrisForDouble(String prisIn){
-        while(!prisIn.matches("\\d+(\\.\\d+)?")){
-            System.out.println("Prisen kan kun indeholde tal.");
-            System.out.print("Varen/servicens pris :");
-            prisIn = scn.nextLine();
-        }
-        return Double.parseDouble(prisIn);
-    }//gyldigPrisForDouble
-}
+} // Salg class
